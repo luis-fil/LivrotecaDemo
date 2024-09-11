@@ -3,9 +3,19 @@ package com.runapp.negocio.basica.foruns;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Forum {
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
 	private String titulo;
+	@OneToMany
 	private List<Topico> topicos;
 	
 	public long getId() {
@@ -28,7 +38,6 @@ public class Forum {
 	}
 	
 	public Forum() {
-		super();
 		this.topicos = new ArrayList<Topico>();
 	}
 	
