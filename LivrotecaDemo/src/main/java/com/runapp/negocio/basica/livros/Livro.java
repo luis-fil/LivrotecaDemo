@@ -3,9 +3,15 @@ package com.runapp.negocio.basica.livros;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Livro {
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
 	private String titulo;
 	private String autor;
@@ -16,6 +22,7 @@ public class Livro {
 	private String sinopse;
 	private String editora;
 	private int quantidade;
+	@OneToMany
 	private List<Avaliacao> avaliacoes;
 	private double nota;
 	
