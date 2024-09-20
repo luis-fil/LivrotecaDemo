@@ -26,6 +26,18 @@ public class Livro {
 	private List<Avaliacao> avaliacoes;
 	private double nota;
 	
+	public Livro(String titulo, String autor, double valorLivroFisico, double valorEbook, int numeroPaginas, String genero, String sinopse, String editora, int quantidade) {
+		this.titulo = titulo;
+		this.autor = autor;
+		this.valorLivroFisico = valorLivroFisico;
+		this.valorEbook = valorEbook;
+		this.numeroPaginas = numeroPaginas;
+		this.genero = genero;
+		this.sinopse = sinopse;
+		this.editora = editora;
+		this.quantidade = quantidade;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -120,4 +132,5 @@ public class Livro {
 	public void setNota(double nota) {
 		this.nota = nota;
 	}
+	
 }
