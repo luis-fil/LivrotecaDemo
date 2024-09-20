@@ -2,9 +2,17 @@ package com.runapp.negocio.basica.livros;
 
 import com.runapp.negocio.basica.usuarios.Cliente;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
+@Entity
 public class Avaliacao {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	private double nota;
 	private String titulo;
 	private String corpo;
@@ -37,5 +45,11 @@ public class Avaliacao {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 }
