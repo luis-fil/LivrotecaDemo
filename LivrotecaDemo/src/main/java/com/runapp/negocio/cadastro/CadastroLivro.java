@@ -7,6 +7,8 @@ import com.runapp.dados.InterfaceRepositorioLivro;
 import com.runapp.dados.InterfaceRepositorioAvaliacao;
 import com.runapp.negocio.basica.livros.*;
 import com.runapp.negocio.basica.usuarios.Cliente;
+import com.runapp.negocio.cadastro.exception.LivroNaoExisteException;
+import com.runapp.negocio.cadastro.exception.QuantidadeInsuficienteException;
 
 @Service
 public class CadastroLivro {
@@ -22,7 +24,8 @@ public class CadastroLivro {
 	}
 	
 	public void atualizarLivro(Long idLivro, String novoTitulo, String novoAutor, double novoValorLivroFisico, double novoValorEbook, 
-            int novoNumeroPaginas, String novoGenero, String novaSinopse, String novaEditora, int novaQuantidade) {
+            int novoNumeroPaginas, String novoGenero, String novaSinopse, String novaEditora, int novaQuantidade) 
+            		throws LivroNaoExisteException {
 		Livro livro = colecaoLivros.findById(idLivro);
 		if(livro != null) {
 			livro.setTitulo(novoTitulo);
@@ -36,11 +39,12 @@ public class CadastroLivro {
 			livro.setQuantidade(novaQuantidade);
 		}
 		else {
-			//exception
+			throw new LivroNaoExisteException(idLivro);
 		}
 	}
 	
-	public void avaliarLivro(Long idLivro, Cliente cliente, String titulo, String corpo, double nota) {
+	public void avaliarLivro(Long idLivro, Cliente cliente, String titulo, String corpo, double nota)
+			throws LivroNaoExisteException {
         Livro livro = colecaoLivros.findById(idLivro);
         if(livro != null) {
         	Avaliacao avaliacao = new Avaliacao(titulo, corpo, nota, livro, cliente);
@@ -50,7 +54,7 @@ public class CadastroLivro {
         	colecaoLivros.save(livro);
         }
         else {
-        	//except
+        	throw new LivroNaoExisteException(idLivro);
         }
     }
 
@@ -69,28 +73,30 @@ public class CadastroLivro {
         livro.setNota(mediaNotas);
     }
 	
-	public void aumentarQuantidade(Long idLivro, int quantidade) {
+	public void aumentarQuantidade(Long idLivro, int quantidade)
+			throws LivroNaoExisteException {
 		Livro livro = colecaoLivros.findById(idLivro);
 		if(livro != null) {
 			livro.setQuantidade(livro.getQuantidade() + quantidade);
 			colecaoLivros.save(livro);
 		}
 		else {
-			//exception
+			throw new LivroNaoExisteException(idLivro);
 		}
 	}
 
-	public void diminuirQuantidade(Long idLivro, int quantidade) {
+	public void diminuirQuantidade(Long idLivro, int quantidade)
+			throws LivroNaoExisteException, QuantidadeInsuficienteException {
 		Livro livro = colecaoLivros.findById(idLivro);
 		if(livro != null) {
 			if (livro.getQuantidade() < quantidade) {
-	    	//exception
+				throw new QuantidadeInsuficienteException(quantidade, livro.getQuantidade());
 			}
 			livro.setQuantidade(livro.getQuantidade() - quantidade);
 			colecaoLivros.save(livro);
 		}
 		else {
-			//exception
+			throw new LivroNaoExisteException(idLivro);
 		}
 	}
 }
