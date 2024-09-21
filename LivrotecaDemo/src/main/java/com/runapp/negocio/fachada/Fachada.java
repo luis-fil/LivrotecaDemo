@@ -39,7 +39,7 @@ public class Fachada {
 	public boolean existeUsuarioId(Long id) {
 		return cadastroUsuario.existeUsuarioId(id);
 	}
-	public void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException {
+	public void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
 		cadastroUsuario.salvarAlteracaoUsuario(usuario);
 	}
 	
@@ -64,7 +64,7 @@ public class Fachada {
 	}
 	
 	// Negocio Usuario-Pedido
-	public void cancelarPedidoCliente(String emailCliente) throws UsuarioNaoExisteException, NaoEhClienteException {
+	public void cancelarPedidoCliente(String emailCliente) throws UsuarioNaoExisteException, NaoEhClienteException, UsuarioDuplicadoException {
 		Usuario u = procurarUsuarioEmail(emailCliente);
 		if (!(u instanceof Cliente)) throw new NaoEhClienteException(emailCliente);
 		Cliente cliente = (Cliente) u;
@@ -75,7 +75,7 @@ public class Fachada {
 		cliente.setPedidoPendente(new Pedido(cliente, "PENDENTE"));
 		salvarAlteracaoUsuario(cliente);
 	}
-	public void finalizarPedidoCliente(String emailCliente) throws UsuarioNaoExisteException, NaoEhClienteException {
+	public void finalizarPedidoCliente(String emailCliente) throws UsuarioNaoExisteException, NaoEhClienteException, UsuarioDuplicadoException {
 		Usuario u = procurarUsuarioEmail(emailCliente);
 		if (!(u instanceof Cliente)) throw new NaoEhClienteException(emailCliente);
 		Cliente cliente = (Cliente) u;

@@ -11,7 +11,7 @@ public interface InterfaceCadastroUsuario {
 
 	Usuario adicionarUsuario(Usuario usuario) throws UsuarioDuplicadoException;
 	
-	void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException;
+	void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException;
 
 	List<Usuario> listarUsuarios();
 

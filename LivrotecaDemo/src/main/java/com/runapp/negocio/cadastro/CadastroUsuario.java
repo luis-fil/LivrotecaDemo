@@ -48,8 +48,18 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 	}
 
 	@Override
-	public void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException {
-		procurarUsuarioEmail(usuario.getEmail());
-		repositorioUsuario.save(usuario);
+	public void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
+		Usuario u = procurarUsuarioId(usuario.getId());
+		if (u == null) throw new UsuarioNaoExisteException(usuario.getId());
+		if (u.getEmail() == usuario.getEmail()) {
+			repositorioUsuario.save(usuario);			
+		} else {
+			try {
+				procurarUsuarioEmail(usuario.getEmail());
+				throw new UsuarioDuplicadoException(usuario.getEmail());
+			} catch(UsuarioNaoExisteException err) {
+				repositorioUsuario.save(usuario);
+			}
+		}
 	}
 }
