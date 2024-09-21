@@ -18,6 +18,8 @@ public class Mensagem {
 	private Calendar data;
 	@ManyToOne
 	private Usuario rementente;
+	@ManyToOne
+	private Topico topico;
 	
 	public String getCorpo() {
 		return corpo;
@@ -31,6 +33,12 @@ public class Mensagem {
 	public void setRementente(Usuario rementente) {
 		this.rementente = rementente;
 	}
+	public Topico getTopico() {
+		return topico;
+	}
+	public void setTopico(Topico topico) {
+		this.topico = topico;
+	}
 	public Calendar getData() {
 		return data;
 	}
@@ -42,5 +50,14 @@ public class Mensagem {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public Mensagem(Topico topico) {
+		this.topico = topico;
+	}
+	public Mensagem(String corpo, Calendar data, Usuario remetente, Topico topico) {
+		this.corpo = corpo;
+		this.data = data;
+		this.rementente = remetente;
+		this.topico = topico;
 	}
 }

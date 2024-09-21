@@ -1,7 +1,5 @@
 package com.runapp.negocio.basica.foruns;
 
-import java.util.List;
-
 import com.runapp.negocio.basica.usuarios.Usuario;
 
 import jakarta.persistence.Entity;
@@ -9,20 +7,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-
-import java.util.ArrayList;
 
 @Entity
 public class Topico {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	private long id;
 	private String titulo;
 	private String corpo;
 	@ManyToOne
 	private Usuario remetente;
-	@OneToMany
-	private List<Mensagem> mensagens;
+	@ManyToOne
+	private Forum forum;
 	
 	public String getTitulo() {
 		return titulo;
@@ -42,24 +38,20 @@ public class Topico {
 	public void setRemetente(Usuario remetente) {
 		this.remetente = remetente;
 	}
-	public List<Mensagem> getMensagens() {
-		return mensagens;
+	public Forum getForum() {
+		return forum;
 	}
-	public void setMensagens(List<Mensagem> mensagens) {
-		this.mensagens = mensagens;
+	public void setForum(Forum forum) {
+		this.forum = forum;
+	}
+	public Topico(Forum forum) {
+		this.forum = forum;
 	}
 	
-	public Topico() {
-		this.mensagens = new ArrayList<Mensagem>();
-	}
-	
-	public Topico(String titulo, String corpo, Usuario remetente){
+	public Topico(String titulo, String corpo, Usuario remetente, Forum forum){
 		this.titulo = titulo;
 		this.corpo = corpo;
 		this.remetente = remetente;
-	}
-	
-	public void adicionarMensagem(Mensagem m) {
-		mensagens.add(m);
+		this.forum = forum;
 	}
 }
