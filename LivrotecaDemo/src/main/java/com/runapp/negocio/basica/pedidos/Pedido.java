@@ -22,7 +22,7 @@ public class Pedido {
 	private Cliente cliente;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<ItemPedido> itens;
-	private String status; // "PENDENTE" / "FINALIZADO" / "CANCELADO"
+	private String status; // "PENDENTE" / "FINALIZADO"
 	
 	public Pedido() {
 		this.itens = new ArrayList<ItemPedido>();

@@ -23,7 +23,7 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 	}
 
 	@Override
-	public Usuario salvarUsuario(Usuario usuario) throws UsuarioDuplicadoException {
+	public Usuario adicionarUsuario(Usuario usuario) throws UsuarioDuplicadoException {
 		try {
 			procurarUsuarioEmail(usuario.getEmail());
 			throw new UsuarioDuplicadoException(usuario.getEmail());
@@ -48,9 +48,8 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 	}
 
 	@Override
-	public void removerUsuarioEmail(String email) throws UsuarioNaoExisteException {
-		Usuario usuario = procurarUsuarioEmail(email);
-		repositorioUsuario.delete(usuario);
+	public void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException {
+		procurarUsuarioEmail(usuario.getEmail());
+		repositorioUsuario.save(usuario);
 	}
-
 }

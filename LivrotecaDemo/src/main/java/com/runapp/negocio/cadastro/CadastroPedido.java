@@ -40,7 +40,6 @@ public class CadastroPedido implements InterfaceCadastroPedido {
 
 	@Override
 	public void removerPedido(Pedido pedido) {
-		pedido.setStatus("CANCELADO");
 		repositorioPedido.delete(pedido);
 	}
 }
