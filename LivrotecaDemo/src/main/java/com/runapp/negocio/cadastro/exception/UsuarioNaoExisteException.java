@@ -8,7 +8,7 @@ public class UsuarioNaoExisteException extends Exception {
 		super("Não existe no sistema um usuário com o email informado");
 		this.email = email;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}

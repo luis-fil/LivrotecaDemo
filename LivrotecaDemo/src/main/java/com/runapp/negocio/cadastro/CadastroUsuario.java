@@ -18,9 +18,7 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 	@Override
 	public Usuario procurarUsuarioEmail(String email) throws UsuarioNaoExisteException {
 		Usuario u = repositorioUsuario.findByEmail(email);
-		if (u == null) {
-			throw new UsuarioNaoExisteException(email);
-		}
+		if (u == null) throw new UsuarioNaoExisteException(email);
 		return u;
 	}
 

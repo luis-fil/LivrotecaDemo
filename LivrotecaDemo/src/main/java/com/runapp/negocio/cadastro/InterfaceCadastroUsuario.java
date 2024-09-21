@@ -1,7 +1,6 @@
 package com.runapp.negocio.cadastro;
 
 import java.util.List;
-
 import com.runapp.negocio.basica.usuarios.Usuario;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;

@@ -1,8 +1,6 @@
 package com.runapp.negocio.cadastro;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,31 +9,38 @@ import com.runapp.negocio.basica.pedidos.Pedido;
 import com.runapp.negocio.basica.usuarios.Cliente;
 
 @Service
-public class CadastroPedido {
+public class CadastroPedido implements InterfaceCadastroPedido {
 	@Autowired
 	private InterfaceRepositorioPedido repositorioPedido;
 	
+	@Override
 	public List<Pedido> exibirHistoricoCliente(Cliente cliente) {
 		return repositorioPedido.findByCliente_IdAndStatusContaining(cliente.getId(), "FINALIZADO");
 	}
 
-	public List<Pedido> exibirExtrato(String status) {
-		return repositorioPedido.findByStatusContaining(status);
+	@Override
+	public List<Pedido> exibirExtrato() {
+		return repositorioPedido.findByStatusContaining("FINALIZADO");
 	}
 
-	public Pedido save(Pedido pedido) {
+	@Override
+	public Pedido salvarPedido(Pedido pedido) {
 		return repositorioPedido.save(pedido);
 	}
 
-	public Optional<Pedido> findById(Long id) {
-		return repositorioPedido.findById(id);
+	@Override
+	public Pedido procurarPedidoId(Long id) {
+		return repositorioPedido.findById(id).orElse(null);
 	}
 
-	public boolean existsById(Long id) {
+	@Override
+	public boolean existePedidoId(Long id) {
 		return repositorioPedido.existsById(id);
 	}
 
-	public void delete(Pedido entity) {
-		repositorioPedido.delete(entity);
+	@Override
+	public void removerPedido(Pedido pedido) {
+		pedido.setStatus("CANCELADO");
+		repositorioPedido.delete(pedido);
 	}
 }
