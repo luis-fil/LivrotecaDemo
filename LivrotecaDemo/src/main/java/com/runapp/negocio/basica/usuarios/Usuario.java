@@ -33,11 +33,11 @@ public abstract class Usuario {
 		this.id = id;
 	}
 	
-	public String getCpf() {
+	public String getEmail() {
 		return email;
 	}
-	public void setCpf(String cpf) {
-		this.email = cpf;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {
