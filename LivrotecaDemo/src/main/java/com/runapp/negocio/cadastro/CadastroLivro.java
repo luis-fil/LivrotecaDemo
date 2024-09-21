@@ -1,5 +1,7 @@
 package com.runapp.negocio.cadastro;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +12,22 @@ import com.runapp.negocio.basica.usuarios.Cliente;
 import com.runapp.negocio.cadastro.exception.LivroNaoExisteException;
 import com.runapp.negocio.cadastro.exception.QuantidadeInsuficienteException;
 
+
 @Service
-public class CadastroLivro {
+public class CadastroLivro implements InterfaceCadastroLivro {
 	@Autowired
 	private InterfaceRepositorioLivro colecaoLivros;
 	@Autowired
     private InterfaceRepositorioAvaliacao colecaoAvaliacoes;
 	
+	@Override
 	public void adicionarLivro(String titulo, String autor, double valorLivroFisico, double valorEbook, 
             int numeroPaginas, String genero, String sinopse, String editora, int quantidade) {
 		Livro novoLivro = new Livro(titulo, autor, valorLivroFisico, valorEbook, numeroPaginas, genero, sinopse, editora, quantidade);
 		colecaoLivros.save(novoLivro);
 	}
 	
+	@Override
 	public void atualizarLivro(Long idLivro, String novoTitulo, String novoAutor, double novoValorLivroFisico, double novoValorEbook, 
             int novoNumeroPaginas, String novoGenero, String novaSinopse, String novaEditora, int novaQuantidade) 
             		throws LivroNaoExisteException {
@@ -43,6 +48,7 @@ public class CadastroLivro {
 		}
 	}
 	
+	@Override
 	public void avaliarLivro(Long idLivro, Cliente cliente, String titulo, String corpo, double nota)
 			throws LivroNaoExisteException {
         Livro livro = colecaoLivros.findById(idLivro);
@@ -73,6 +79,7 @@ public class CadastroLivro {
         livro.setNota(mediaNotas);
     }
 	
+	@Override
 	public void aumentarQuantidade(Long idLivro, int quantidade)
 			throws LivroNaoExisteException {
 		Livro livro = colecaoLivros.findById(idLivro);
@@ -85,6 +92,7 @@ public class CadastroLivro {
 		}
 	}
 
+	@Override
 	public void diminuirQuantidade(Long idLivro, int quantidade)
 			throws LivroNaoExisteException, QuantidadeInsuficienteException {
 		Livro livro = colecaoLivros.findById(idLivro);
@@ -99,4 +107,10 @@ public class CadastroLivro {
 			throw new LivroNaoExisteException(idLivro);
 		}
 	}
+	
+	public List<Livro> listarLivros() {
+		return colecaoLivros.findAll();
+	}
+	
+
 }

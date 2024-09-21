@@ -1,5 +1,7 @@
 package com.runapp.dados;
 
+import java.util.List;
+
 import com.runapp.negocio.basica.livros.Livro;
 
 public interface InterfaceRepositorioLivro {
@@ -8,4 +10,5 @@ public interface InterfaceRepositorioLivro {
 
 	void save(Livro livro);
 
+	List<Livro> findAll();
 }
