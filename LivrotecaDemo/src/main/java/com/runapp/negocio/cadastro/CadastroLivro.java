@@ -108,9 +108,56 @@ public class CadastroLivro implements InterfaceCadastroLivro {
 		}
 	}
 	
+	@Override
 	public List<Livro> listarLivros() {
 		return colecaoLivros.findAll();
 	}
 	
+	@Override
+	public Livro procurarLivroId(Long id)
+			throws LivroNaoExisteException{
+		Livro livro = colecaoLivros.findById(id);
+		if(livro != null) {
+			return livro;
+		}
+		else {
+			throw new LivroNaoExisteException(id);
+		}
+	}
+	
+	@Override
+	public Livro procurarLivroTitulo(String titulo)
+			throws LivroNaoExisteException{
+		Livro livro = colecaoLivros.findByTitulo(titulo);
+		if(livro != null) {
+			return livro;
+		}
+		else {
+			throw new LivroNaoExisteException(titulo);
+		}
+	}
+	
+	@Override
+    public List<Livro> procurarLivroAutor(String autor)
+    		throws LivroNaoExisteException {
+        List<Livro> livros = colecaoLivros.findByAutor(autor);
+        if (livros != null && !livros.isEmpty()) {
+            return livros;
+        }
+        else {
+            throw new LivroNaoExisteException(autor);
+        }
+    }
 
+	@Override
+    public List<Livro> procurarLivroGenero(String genero)
+    		throws LivroNaoExisteException {
+        List<Livro> livros = colecaoLivros.findByGenero(genero);
+        if (livros != null && !livros.isEmpty()) {
+            return livros;
+        }
+        else {
+            throw new LivroNaoExisteException(genero);
+        }
+    }
 }

@@ -1,5 +1,8 @@
 package com.runapp.negocio.cadastro;
 
+import java.util.List;
+
+import com.runapp.negocio.basica.livros.Livro;
 import com.runapp.negocio.basica.usuarios.Cliente;
 import com.runapp.negocio.cadastro.exception.LivroNaoExisteException;
 import com.runapp.negocio.cadastro.exception.QuantidadeInsuficienteException;
@@ -20,5 +23,15 @@ public interface InterfaceCadastroLivro {
 
 	void diminuirQuantidade(Long idLivro, int quantidade)
 			throws LivroNaoExisteException, QuantidadeInsuficienteException;
+	
+	public List<Livro> listarLivros();
+
+	Livro procurarLivroTitulo(String titulo) throws LivroNaoExisteException;
+
+	Livro procurarLivroId(Long id) throws LivroNaoExisteException;
+
+	List<Livro> procurarLivroAutor(String autor) throws LivroNaoExisteException;
+
+	List<Livro> procurarLivroGenero(String genero) throws LivroNaoExisteException;
 
 }

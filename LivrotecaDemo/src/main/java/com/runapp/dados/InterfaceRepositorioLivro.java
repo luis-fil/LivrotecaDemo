@@ -11,4 +11,10 @@ public interface InterfaceRepositorioLivro {
 	void save(Livro livro);
 
 	List<Livro> findAll();
+
+	Livro findByTitulo(String titulo);
+
+	List<Livro> findByAutor(String autor);
+
+	List<Livro> findByGenero(String genero);
 }
