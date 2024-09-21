@@ -17,7 +17,17 @@ public class Avaliacao {
 	private String titulo;
 	private String corpo;
 	@ManyToOne
+	private Livro livro;
+	@ManyToOne
 	private Cliente cliente;
+	
+	public Avaliacao(String titulo, String corpo, double nota, Livro livro, Cliente cliente) {
+		this.titulo = titulo;
+		this.corpo = corpo;
+		this.nota = nota;
+		this.livro = livro;
+		this.cliente = cliente;
+	}
 	
 	public double getNota() {
 		return nota;
@@ -40,15 +50,25 @@ public class Avaliacao {
 		this.corpo = corpo;
 	}
 	
+	public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
