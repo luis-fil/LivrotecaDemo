@@ -17,12 +17,12 @@ public class Endereco {
 	private String cep;
 	private String uf;
 	
-	public Endereco(String logradouro, String bairro, String uf, String cep, String numero) {
+	public Endereco(String logradouro, String numero, String bairro, String cep, String uf) {
 		this.logradouro = logradouro;
-		this.bairro = bairro;
-		this.uf = uf;
-		this.cep = cep;
 		this.numero = numero;
+		this.bairro = bairro;
+		this.cep = cep;
+		this.uf = uf;
 	}
 	public Endereco() {
 		

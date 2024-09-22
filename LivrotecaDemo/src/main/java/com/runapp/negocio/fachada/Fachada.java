@@ -160,19 +160,17 @@ public class Fachada {
 		if(forum == null) throw new ForumInvalidoException();
 		return cadastroForum.salvarForum(forum);
 	}
-	public Topico salvarTopico(Topico topico) throws TopicoInvalidoException, ForumInvalidoException, ForumInexistenteException, UsuarioNaoExisteException, UsuarioInvalidoException {
+	public Topico salvarTopico(Topico topico) throws TopicoInvalidoException, ForumInvalidoException, ForumInexistenteException, UsuarioNaoExisteException {
 		if(topico == null) throw new TopicoInvalidoException();
-		Usuario u = cadastroUsuario.procurarUsuarioId(topico.getRemetente().getId());
-		if (u == null) throw new UsuarioInvalidoException();
+		procurarUsuarioId(topico.getRemetente().getId());
 		if(topico.getForum() == null) throw new ForumInvalidoException(topico);
 		return cadastroTopico.salvarTopico(topico);
 	}
-	public Mensagem salvarMensagem(Mensagem mensagem) throws MensagemInvalidaException, TopicoInvalidoException, ForumInvalidoException, TopicoInexistenteException, ForumInexistenteException, NaoEhClienteException, UsuarioInvalidoException {
+	public Mensagem salvarMensagem(Mensagem mensagem) throws MensagemInvalidaException, TopicoInvalidoException, ForumInvalidoException, TopicoInexistenteException, ForumInexistenteException, UsuarioNaoExisteException {
 		if(mensagem == null) throw new MensagemInvalidaException();
 		if(mensagem.getTopico() == null) throw new TopicoInvalidoException();
 		if(mensagem.getTopico().getForum() == null) throw new ForumInvalidoException();
-		Usuario u = cadastroUsuario.procurarUsuarioId(mensagem.getRementente().getId());
-		if(u == null) throw new UsuarioInvalidoException();
+		procurarUsuarioId(mensagem.getRementente().getId());
 		return cadastroMensagem.salvarMensagem(mensagem);
 	}
 	

@@ -16,8 +16,8 @@ public class Cliente extends Usuario{
 	public Cliente() {
 		super();
 	}
-	public Cliente(String email, String senha, String nome, Endereco endereco) {
-		super(email, senha, nome);
+	public Cliente(String nome, String email, String senha, Endereco endereco) {
+		super(nome, email, senha);
 		this.endereco = endereco;
 		this.pedidoPendente = new Pedido(this, "PENDENTE");
 	}

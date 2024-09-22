@@ -13,17 +13,17 @@ public abstract class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	private String nome;
 	private String email;
 	private String senha;
-	private String nome;
 	
 	public Usuario() {
 		
 	}
-	public Usuario(String email, String senha, String nome) {
+	public Usuario(String nome, String email, String senha) {
+		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
-		this.nome = nome;
 	}
 
 	public long getId() {
