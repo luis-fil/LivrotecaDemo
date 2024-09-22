@@ -18,6 +18,8 @@ import com.runapp.negocio.cadastro.InterfaceCadastroTopico;
 import com.runapp.negocio.cadastro.InterfaceCadastroUsuario;
 import com.runapp.negocio.cadastro.exception.*;
 import com.runapp.negocio.fachada.exception.ClienteNaoExisteException;
+import com.runapp.negocio.fachada.exception.PedidoVazioException;
+import com.runapp.negocio.fachada.exception.QuantidadeInvalidaException;
 import com.runapp.negocio.cadastro.InterfaceCadastroForum;
 import com.runapp.negocio.cadastro.InterfaceCadastroLivro;
 import com.runapp.negocio.cadastro.InterfaceCadastroMensagem;
@@ -136,22 +138,31 @@ public class Fachada {
 		cliente.setPedidoPendente(new Pedido(cliente, "PENDENTE"));
 		salvarAlteracaoUsuario(cliente);
 	}
-	public void finalizarPedidoCliente(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException {
+	public double finalizarPedidoCliente(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException, LivroNaoExisteException, QuantidadeInsuficienteException, PedidoVazioException {
 		Cliente cliente = procurarClienteId(id);
 		
 		Pedido pedido = cliente.getPedidoPendente();
+		if (pedido.getItens().isEmpty()) throw new PedidoVazioException();
+		for (ItemPedido item : pedido.getItens()) {
+			diminuirQuantidade(item.getLivro().getId(), item.getQuantidade());
+		}
+		double valorTotal = pedido.getValorTotal();
+		
 		pedido.setStatus("FINALIZADO");
 		salvarPedido(pedido);
 		
 		cliente.setPedidoPendente(new Pedido(cliente, "PENDENTE"));
 		salvarAlteracaoUsuario(cliente);
+		return valorTotal;
 	}
 	
 	// Negocio Livro-Pedido-Cliente
-	public void adicionarLivroPedidoCliente(Long idLivro, int quantidade, boolean isEbook, Long idCliente) throws UsuarioNaoExisteException, ClienteNaoExisteException, LivroNaoExisteException {
+	public void adicionarLivroPedidoCliente(Long idLivro, int quantidade, boolean isEbook, Long idCliente) throws UsuarioNaoExisteException, ClienteNaoExisteException, LivroNaoExisteException, QuantidadeInvalidaException, QuantidadeInsuficienteException {
 		Cliente cliente = procurarClienteId(idCliente);
 		
 		Livro livro = procurarLivroId(idLivro);
+		if (quantidade < 1) throw new QuantidadeInvalidaException(quantidade);
+		if (quantidade > livro.getQuantidade()) throw new QuantidadeInsuficienteException(quantidade, livro.getQuantidade());
 		ItemPedido item = new ItemPedido(livro, quantidade, isEbook);
 		
 		Pedido pedido = cliente.getPedidoPendente();
