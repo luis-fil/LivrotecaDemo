@@ -10,6 +10,10 @@ import com.runapp.negocio.cadastro.exception.ForumInvalidoException;
 import com.runapp.negocio.cadastro.exception.TopicoInexistenteException;
 import com.runapp.negocio.cadastro.exception.TopicoInvalidoException;
 
+/**
+ * @author Luis Filipe
+ * @version 1.00
+ */
 public interface InterfaceCadastroTopico {
 	List<Topico> procurarTopicoTitulo(String titulo) throws TopicoInexistenteException;
 	Optional<Topico> localizarTopicoId(long id);

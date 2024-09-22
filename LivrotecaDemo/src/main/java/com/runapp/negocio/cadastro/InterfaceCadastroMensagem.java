@@ -12,6 +12,10 @@ import com.runapp.negocio.cadastro.exception.MensagemInvalidaException;
 import com.runapp.negocio.cadastro.exception.TopicoInexistenteException;
 import com.runapp.negocio.cadastro.exception.TopicoInvalidoException;
 
+/**
+ * @author Luis Filipe
+ * @version 1.0o
+ */
 public interface InterfaceCadastroMensagem {
 	Optional<Mensagem> localizarMensagemId(long id);
 	Mensagem salvarMensagem(Mensagem m) throws MensagemInvalidaException, TopicoInvalidoException, ForumInvalidoException, TopicoInexistenteException, ForumInexistenteException;

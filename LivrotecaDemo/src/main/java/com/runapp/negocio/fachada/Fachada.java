@@ -22,6 +22,10 @@ import com.runapp.negocio.cadastro.InterfaceCadastroForum;
 import com.runapp.negocio.cadastro.InterfaceCadastroLivro;
 import com.runapp.negocio.cadastro.InterfaceCadastroMensagem;
 
+/**
+ * @author José Matheus, Letícia Baracho e Luís Filipe
+ * @version 1.00
+ */
 @Service
 public class Fachada {
 	@Autowired

@@ -1,5 +1,8 @@
 package com.runapp.negocio.cadastro.exception;
-
+/**
+ * @author Luis Filipe
+ * @version 1.02
+ */
 public class ForumDuplicadoException extends Exception {
 	private static final long serialVersionUID = -2477334368651453583L;
 	

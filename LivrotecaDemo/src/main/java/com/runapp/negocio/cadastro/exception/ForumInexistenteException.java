@@ -3,7 +3,10 @@ package com.runapp.negocio.cadastro.exception;
 import com.runapp.negocio.basica.foruns.Forum;
 import com.runapp.negocio.basica.foruns.Mensagem;
 import com.runapp.negocio.basica.foruns.Topico;
-
+/**
+ * @author Luis Filipe
+ * @version 1.00
+ */
 public class ForumInexistenteException extends Exception {
 	private static final long serialVersionUID = -1616891515775298026L;
 	

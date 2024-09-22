@@ -2,14 +2,15 @@ package com.runapp.dados;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.runapp.negocio.basica.livros.Livro;
 
 /**
- * Essa é uma interface de um repositório de livros
  * @author Letícia Baracho
  * @version 1.0
  */
-
+@Repository
 public interface InterfaceRepositorioLivro {
 
 	Livro findById(Long idLivro);

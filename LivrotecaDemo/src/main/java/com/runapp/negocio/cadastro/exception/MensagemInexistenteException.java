@@ -1,5 +1,8 @@
 package com.runapp.negocio.cadastro.exception;
-
+/**
+ * @author Luis Filipe
+ * @version 1.00
+ */
 public class MensagemInexistenteException extends Exception {
 	private static final long serialVersionUID = 4102842045541437348L;
 	long id;

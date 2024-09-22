@@ -2,7 +2,10 @@ package com.runapp.negocio.cadastro.exception;
 
 import com.runapp.negocio.basica.foruns.Mensagem;
 import com.runapp.negocio.basica.foruns.Topico;
-
+/**
+ * @author Luis Filipe
+ * @version 1.00
+ */
 public class TopicoInexistenteException extends Exception {
 	private static final long serialVersionUID = -4481824616630423954L;
 	long id;
