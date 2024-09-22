@@ -12,9 +12,9 @@ import com.runapp.negocio.basica.usuarios.Cliente;
 import com.runapp.negocio.basica.usuarios.Usuario;
 import com.runapp.negocio.cadastro.InterfaceCadastroPedido;
 import com.runapp.negocio.cadastro.InterfaceCadastroUsuario;
-import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
-import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
+import com.runapp.negocio.cadastro.exception.*;
 import com.runapp.negocio.fachada.exception.NaoEhClienteException;
+import com.runapp.negocio.cadastro.InterfaceCadastroLivro;
 
 @Service
 public class Fachada {
@@ -22,6 +22,8 @@ public class Fachada {
 	private InterfaceCadastroUsuario cadastroUsuario;
 	@Autowired
 	private InterfaceCadastroPedido cadastroPedido;
+	@Autowired
+	private InterfaceCadastroLivro cadastroLivro;
 	
 	// Usuario
 	public Usuario procurarUsuarioEmail(String email) throws UsuarioNaoExisteException {
@@ -63,6 +65,42 @@ public class Fachada {
 		cadastroPedido.removerPedido(pedido);
 	}
 	
+	//Livro
+	public void adicionarLivro(String titulo, String autor, double valorLivroFisico, double valorEbook, 
+            int numeroPaginas, String genero, String sinopse, String editora, int quantidade) throws LivroJaExisteException {
+        cadastroLivro.adicionarLivro(titulo, autor, valorLivroFisico, valorEbook, numeroPaginas, genero, sinopse, editora, quantidade);
+    }
+    public void atualizarLivro(Long idLivro, String novoTitulo, String novoAutor, double novoValorLivroFisico, 
+            double novoValorEbook, int novoNumeroPaginas, String novoGenero, 
+            String novaSinopse, String novaEditora, int novaQuantidade) throws LivroNaoExisteException {
+        cadastroLivro.atualizarLivro(idLivro, novoTitulo, novoAutor, novoValorLivroFisico, novoValorEbook, 
+                novoNumeroPaginas, novoGenero, novaSinopse, novaEditora, novaQuantidade);
+    }
+    public void avaliarLivro(Long idLivro, Cliente cliente, String titulo, String corpo, double nota) throws LivroNaoExisteException {
+        cadastroLivro.avaliarLivro(idLivro, cliente, titulo, corpo, nota);
+    }
+    public void aumentarQuantidade(Long idLivro, int quantidade) throws LivroNaoExisteException {
+        cadastroLivro.aumentarQuantidade(idLivro, quantidade);
+    }
+    public void diminuirQuantidade(Long idLivro, int quantidade) throws LivroNaoExisteException, QuantidadeInsuficienteException {
+        cadastroLivro.diminuirQuantidade(idLivro, quantidade);
+    }
+    public List<Livro> listarLivros() {
+        return cadastroLivro.listarLivros();
+    }
+    public Livro procurarLivroId(Long id) throws LivroNaoExisteException {
+        return cadastroLivro.procurarLivroId(id);
+    }
+    public Livro procurarLivroTitulo(String titulo) throws LivroNaoExisteException {
+        return cadastroLivro.procurarLivroTitulo(titulo);
+    }
+    public List<Livro> procurarLivroAutor(String autor) throws LivroNaoExisteException {
+        return cadastroLivro.procurarLivroAutor(autor);
+    }
+    public List<Livro> procurarLivroGenero(String genero) throws LivroNaoExisteException {
+        return cadastroLivro.procurarLivroGenero(genero);
+    }
+    
 	// Negocio Usuario-Pedido
 	public void cancelarPedidoCliente(String emailCliente) throws UsuarioNaoExisteException, NaoEhClienteException, UsuarioDuplicadoException {
 		Usuario u = procurarUsuarioEmail(emailCliente);
