@@ -8,6 +8,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
+/**
+ * Essa classe cria um objeto Avaliação
+ * @author Letícia Baracho
+ * @version 1.0
+ */
+
 @Entity
 public class Avaliacao {
 	@Id

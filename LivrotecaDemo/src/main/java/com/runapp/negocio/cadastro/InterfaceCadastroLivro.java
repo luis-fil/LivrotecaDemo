@@ -4,13 +4,18 @@ import java.util.List;
 
 import com.runapp.negocio.basica.livros.Livro;
 import com.runapp.negocio.basica.usuarios.Cliente;
+import com.runapp.negocio.cadastro.exception.AvaliacaoNaoExisteException;
+import com.runapp.negocio.cadastro.exception.LivroJaExisteException;
 import com.runapp.negocio.cadastro.exception.LivroNaoExisteException;
 import com.runapp.negocio.cadastro.exception.QuantidadeInsuficienteException;
-
+/**
+ * @author Letícia Baracho
+ * @version 1.0
+ */
 public interface InterfaceCadastroLivro {
 
 	void adicionarLivro(String titulo, String autor, double valorLivroFisico, double valorEbook, int numeroPaginas,
-			String genero, String sinopse, String editora, int quantidade);
+			String genero, String sinopse, String editora, int quantidade) throws LivroJaExisteException;
 
 	void atualizarLivro(Long idLivro, String novoTitulo, String novoAutor, double novoValorLivroFisico,
 			double novoValorEbook, int novoNumeroPaginas, String novoGenero, String novaSinopse, String novaEditora,
@@ -33,5 +38,7 @@ public interface InterfaceCadastroLivro {
 	List<Livro> procurarLivroAutor(String autor) throws LivroNaoExisteException;
 
 	List<Livro> procurarLivroGenero(String genero) throws LivroNaoExisteException;
+
+	void removerAvaliacao(Long idLivro, Long idAvaliacao) throws LivroNaoExisteException, AvaliacaoNaoExisteException;
 
 }

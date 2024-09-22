@@ -8,6 +8,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+/**
+ * Essa classe cria um objeto Livro
+ * @author Letícia Baracho
+ * @version 1.0
+ */
+
 @Entity
 public class Livro {
 	@Id
