@@ -9,6 +9,6 @@ import com.runapp.negocio.basica.pedidos.Pedido;
 
 @Repository
 public interface InterfaceRepositorioPedido extends JpaRepository<Pedido, Long> {
-	public List<Pedido> findByCliente_IdAndStatusContaining(Long idCliente, String status);
-	public List<Pedido> findByStatusContaining(String status);
+	public List<Pedido> findByCliente_IdAndStatus(Long idCliente, String status);
+	public List<Pedido> findByStatus(String status);
 }

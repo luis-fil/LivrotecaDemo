@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.runapp.dados.InterfaceRepositorioPedido;
 import com.runapp.negocio.basica.pedidos.Pedido;
-import com.runapp.negocio.basica.usuarios.Cliente;
 
 @Service
 public class CadastroPedido implements InterfaceCadastroPedido {
@@ -14,13 +13,13 @@ public class CadastroPedido implements InterfaceCadastroPedido {
 	private InterfaceRepositorioPedido repositorioPedido;
 	
 	@Override
-	public List<Pedido> exibirHistoricoCliente(Cliente cliente) {
-		return repositorioPedido.findByCliente_IdAndStatusContaining(cliente.getId(), "FINALIZADO");
+	public List<Pedido> exibirHistoricoCliente(Long idCliente) {
+		return repositorioPedido.findByCliente_IdAndStatus(idCliente, "FINALIZADO");
 	}
 
 	@Override
 	public List<Pedido> exibirExtrato() {
-		return repositorioPedido.findByStatusContaining("FINALIZADO");
+		return repositorioPedido.findByStatus("FINALIZADO");
 	}
 
 	@Override

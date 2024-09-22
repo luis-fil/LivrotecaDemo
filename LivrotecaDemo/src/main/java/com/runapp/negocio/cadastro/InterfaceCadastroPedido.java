@@ -3,11 +3,10 @@ package com.runapp.negocio.cadastro;
 import java.util.List;
 
 import com.runapp.negocio.basica.pedidos.Pedido;
-import com.runapp.negocio.basica.usuarios.Cliente;
 
 public interface InterfaceCadastroPedido {
 
-	List<Pedido> exibirHistoricoCliente(Cliente cliente);
+	List<Pedido> exibirHistoricoCliente(Long idCliente);
 
 	List<Pedido> exibirExtrato();
 

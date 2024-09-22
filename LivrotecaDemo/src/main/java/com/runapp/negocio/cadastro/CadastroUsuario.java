@@ -23,7 +23,7 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 	}
 
 	@Override
-	public Usuario adicionarUsuario(Usuario usuario) throws UsuarioDuplicadoException {
+	public Usuario cadastrarUsuario(Usuario usuario) throws UsuarioDuplicadoException {
 		try {
 			procurarUsuarioEmail(usuario.getEmail());
 			throw new UsuarioDuplicadoException(usuario.getEmail());
@@ -38,8 +38,10 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 	}
 
 	@Override
-	public Usuario procurarUsuarioId(Long id) {
-		return repositorioUsuario.findById(id).orElse(null);
+	public Usuario procurarUsuarioId(Long id) throws UsuarioNaoExisteException {
+		Usuario u = repositorioUsuario.findById(id).orElse(null);
+		if (u == null) throw new UsuarioNaoExisteException(id);
+		return u;
 	}
 
 	@Override
@@ -50,8 +52,7 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 	@Override
 	public void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
 		Usuario u = procurarUsuarioId(usuario.getId());
-		if (u == null) throw new UsuarioNaoExisteException(usuario.getId());
-		if (u.getEmail() == usuario.getEmail()) {
+		if (u.getEmail().equals(usuario.getEmail())) {
 			repositorioUsuario.save(usuario);			
 		} else {
 			try {

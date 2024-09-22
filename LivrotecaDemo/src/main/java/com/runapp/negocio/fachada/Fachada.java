@@ -17,7 +17,7 @@ import com.runapp.negocio.cadastro.InterfaceCadastroPedido;
 import com.runapp.negocio.cadastro.InterfaceCadastroTopico;
 import com.runapp.negocio.cadastro.InterfaceCadastroUsuario;
 import com.runapp.negocio.cadastro.exception.*;
-import com.runapp.negocio.fachada.exception.NaoEhClienteException;
+import com.runapp.negocio.fachada.exception.ClienteNaoExisteException;
 import com.runapp.negocio.cadastro.InterfaceCadastroForum;
 import com.runapp.negocio.cadastro.InterfaceCadastroLivro;
 import com.runapp.negocio.cadastro.InterfaceCadastroMensagem;
@@ -41,13 +41,13 @@ public class Fachada {
 	public Usuario procurarUsuarioEmail(String email) throws UsuarioNaoExisteException {
 		return cadastroUsuario.procurarUsuarioEmail(email);
 	}
-	public Usuario adicionarUsuario(Usuario usuario) throws UsuarioDuplicadoException {
-		return cadastroUsuario.adicionarUsuario(usuario);
+	public Usuario cadastrarUsuario(Usuario usuario) throws UsuarioDuplicadoException {
+		return cadastroUsuario.cadastrarUsuario(usuario);
 	}
 	public List<Usuario> listarUsuarios() {
 		return cadastroUsuario.listarUsuarios();
 	}
-	public Usuario procurarUsuarioId(Long id) {
+	public Usuario procurarUsuarioId(Long id) throws UsuarioNaoExisteException {
 		return cadastroUsuario.procurarUsuarioId(id);
 	}
 	public boolean existeUsuarioId(Long id) {
@@ -56,10 +56,15 @@ public class Fachada {
 	public void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
 		cadastroUsuario.salvarAlteracaoUsuario(usuario);
 	}
+	public Cliente procurarClienteId(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException {
+		Usuario u = procurarUsuarioId(id);
+		if (!(u instanceof Cliente)) throw new ClienteNaoExisteException(id);
+		return (Cliente) u;
+	}
 	
 	// Pedido
-	public List<Pedido> exibirHistoricoCliente(Cliente cliente) {
-		return cadastroPedido.exibirHistoricoCliente(cliente);
+	public List<Pedido> exibirHistoricoCliente(Long idCliente) {
+		return cadastroPedido.exibirHistoricoCliente(idCliente);
 	}
 	public List<Pedido> exibirExtrato() {
 		return cadastroPedido.exibirExtrato();
@@ -114,10 +119,8 @@ public class Fachada {
     }
     
 	// Negocio Usuario-Pedido
-	public void cancelarPedidoCliente(String emailCliente) throws UsuarioNaoExisteException, NaoEhClienteException, UsuarioDuplicadoException {
-		Usuario u = procurarUsuarioEmail(emailCliente);
-		if (!(u instanceof Cliente)) throw new NaoEhClienteException(emailCliente);
-		Cliente cliente = (Cliente) u;
+	public void cancelarPedidoCliente(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException {
+		Cliente cliente = procurarClienteId(id);
 		
 		Pedido pedido = cliente.getPedidoPendente();
 		removerPedido(pedido);
@@ -125,10 +128,8 @@ public class Fachada {
 		cliente.setPedidoPendente(new Pedido(cliente, "PENDENTE"));
 		salvarAlteracaoUsuario(cliente);
 	}
-	public void finalizarPedidoCliente(String emailCliente) throws UsuarioNaoExisteException, NaoEhClienteException, UsuarioDuplicadoException {
-		Usuario u = procurarUsuarioEmail(emailCliente);
-		if (!(u instanceof Cliente)) throw new NaoEhClienteException(emailCliente);
-		Cliente cliente = (Cliente) u;
+	public void finalizarPedidoCliente(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException {
+		Cliente cliente = procurarClienteId(id);
 		
 		Pedido pedido = cliente.getPedidoPendente();
 		pedido.setStatus("FINALIZADO");
@@ -139,12 +140,10 @@ public class Fachada {
 	}
 	
 	// Negocio Livro-Pedido-Cliente
-	public void adicionarLivroPedidoCliente(Livro livro, int quantidade, boolean isEbook, String emailCliente) throws UsuarioNaoExisteException, NaoEhClienteException {
-		Usuario u = procurarUsuarioEmail(emailCliente);
-		if (!(u instanceof Cliente)) throw new NaoEhClienteException(emailCliente);
-		Cliente cliente = (Cliente) u;
+	public void adicionarLivroPedidoCliente(Long idLivro, int quantidade, boolean isEbook, Long idCliente) throws UsuarioNaoExisteException, ClienteNaoExisteException, LivroNaoExisteException {
+		Cliente cliente = procurarClienteId(idCliente);
 		
-		// ajustar para receber o id do livro e verificar se está no repositorio
+		Livro livro = procurarLivroId(idLivro);
 		ItemPedido item = new ItemPedido(livro, quantidade, isEbook);
 		
 		Pedido pedido = cliente.getPedidoPendente();
@@ -153,83 +152,83 @@ public class Fachada {
 	}
 	
 	// Forum - SALVAR
-		public Forum salvarForum(Forum forum) throws ForumInvalidoException, ForumDuplicadoException {
-			return cadastroForum.salvarForum(forum);
+	public Forum salvarForum(Forum forum) throws ForumInvalidoException, ForumDuplicadoException {
+		return cadastroForum.salvarForum(forum);
+	}
+	public Topico salvarTopico(Topico topico) throws TopicoInvalidoException, ForumInvalidoException, ForumInexistenteException {
+		return cadastroTopico.salvarTopico(topico);
+	}
+	public Mensagem salvarMensagem(Mensagem mensagem) throws MensagemInvalidaException, TopicoInvalidoException, ForumInvalidoException, TopicoInexistenteException, ForumInexistenteException {
+		return cadastroMensagem.salvarMensagem(mensagem);
+	}
+	
+	// Forum - LISTAR
+	public List<Forum> listarForuns(){
+		return cadastroForum.listarForuns();
+	}
+	public List<Topico> listarTopicosForum(Forum forum){
+		return cadastroTopico.listarTopicosForum(forum);
+	}
+	public List<Mensagem> listarMensagensTopico(Topico topico){
+		return cadastroMensagem.listarMensagens(topico);
+	}
+	
+	// Forum - REMOVER
+	public void removerForum(Forum forum) throws ForumInexistenteException, TopicoInexistenteException {
+		List<Topico> topicos = cadastroTopico.listarTopicosForum(forum);
+		List<Mensagem> mensagens;
+		for(Topico t: topicos) {
+			mensagens = cadastroMensagem.listarMensagens(t);
+			mensagens.clear();
+			cadastroTopico.removerTopico(t);
 		}
-		public Topico salvarTopico(Topico topico) throws TopicoInvalidoException, ForumInvalidoException, ForumInexistenteException {
-			return cadastroTopico.salvarTopico(topico);
-		}
-		public Mensagem salvarMensagem(Mensagem mensagem) throws MensagemInvalidaException, TopicoInvalidoException, ForumInvalidoException, TopicoInexistenteException, ForumInexistenteException {
-			return cadastroMensagem.salvarMensagem(mensagem);
-		}
-		
-		// Forum - LISTAR
-		public List<Forum> listarForuns(){
-			return cadastroForum.listarForuns();
-		}
-		public List<Topico> listarTopicosForum(Forum forum){
-			return cadastroTopico.listarTopicosForum(forum);
-		}
-		public List<Mensagem> listarMensagensTopico(Topico topico){
-			return cadastroMensagem.listarMensagens(topico);
-		}
-		
-		// Forum - REMOVER
-		public void removerForum(Forum forum) throws ForumInexistenteException, TopicoInexistenteException {
-			List<Topico> topicos = cadastroTopico.listarTopicosForum(forum);
+		cadastroForum.removerForum(forum);
+	}
+	public void removerForumId(long id) throws ForumInexistenteException, TopicoInexistenteException {
+		Forum f = cadastroForum.localizarForumId(id).orElse(null);
+		if(f!=null) {
+			List<Topico> topicos = cadastroTopico.listarTopicosForum(f);
 			List<Mensagem> mensagens;
 			for(Topico t: topicos) {
 				mensagens = cadastroMensagem.listarMensagens(t);
 				mensagens.clear();
 				cadastroTopico.removerTopico(t);
 			}
-			cadastroForum.removerForum(forum);
-		}
-		public void removerForumId(long id) throws ForumInexistenteException, TopicoInexistenteException {
-			Forum f = cadastroForum.localizarForumId(id).orElse(null);
-			if(f!=null) {
-				List<Topico> topicos = cadastroTopico.listarTopicosForum(f);
-				List<Mensagem> mensagens;
-				for(Topico t: topicos) {
-					mensagens = cadastroMensagem.listarMensagens(t);
-					mensagens.clear();
-					cadastroTopico.removerTopico(t);
-				}
-				cadastroForum.removerForumId(id);
-			} else throw new ForumInexistenteException(f);
-		}
-		public void removerTopico(Topico topico) throws TopicoInexistenteException, TopicoInvalidoException {
-			if(topico != null) {
-				cadastroMensagem.listarMensagens(topico).clear();
-				cadastroTopico.removerTopico(topico);
-			} else throw new TopicoInvalidoException();
-		}
-		public void removerTopicoId(long id) throws TopicoInexistenteException, TopicoInvalidoException {
-			Topico topico = cadastroTopico.localizarTopicoId(id).orElse(null);
-			if(topico != null) {
-				cadastroMensagem.listarMensagens(topico).clear();
-				cadastroTopico.removerTopico(topico);
-			} else throw new TopicoInvalidoException();
-		}
-		public void removerMensagemId(long id) throws MensagemInexistenteException {
-			cadastroMensagem.removerMensagemId(id);
-		}
-		public void removerMensagem(String frase) {
-			cadastroMensagem.removerMensagem(frase);
-		}
-		
-		// Forum - BUSCA
-		public Forum localizarForumId(long id) {
-			return cadastroForum.localizarForumId(id).orElse(null);
-		}
-		public Topico localizarTopicoId(long id) {
-			return cadastroTopico.localizarTopicoId(id).orElse(null);
-		}
-		public Mensagem localizarMensagemId(long id) {
-			return cadastroMensagem.localizarMensagemId(id).orElse(null);
-		}
-		// busca por parametro
-		public List<Topico> procurarTopico(String busca) throws TopicoInexistenteException {
-			return cadastroTopico.procurarTopicoTitulo(busca);
-		}
+			cadastroForum.removerForumId(id);
+		} else throw new ForumInexistenteException(f);
+	}
+	public void removerTopico(Topico topico) throws TopicoInexistenteException, TopicoInvalidoException {
+		if(topico != null) {
+			cadastroMensagem.listarMensagens(topico).clear();
+			cadastroTopico.removerTopico(topico);
+		} else throw new TopicoInvalidoException();
+	}
+	public void removerTopicoId(long id) throws TopicoInexistenteException, TopicoInvalidoException {
+		Topico topico = cadastroTopico.localizarTopicoId(id).orElse(null);
+		if(topico != null) {
+			cadastroMensagem.listarMensagens(topico).clear();
+			cadastroTopico.removerTopico(topico);
+		} else throw new TopicoInvalidoException();
+	}
+	public void removerMensagemId(long id) throws MensagemInexistenteException {
+		cadastroMensagem.removerMensagemId(id);
+	}
+	public void removerMensagem(String frase) {
+		cadastroMensagem.removerMensagem(frase);
+	}
+	
+	// Forum - BUSCA
+	public Forum localizarForumId(long id) {
+		return cadastroForum.localizarForumId(id).orElse(null);
+	}
+	public Topico localizarTopicoId(long id) {
+		return cadastroTopico.localizarTopicoId(id).orElse(null);
+	}
+	public Mensagem localizarMensagemId(long id) {
+		return cadastroMensagem.localizarMensagemId(id).orElse(null);
+	}
+	// busca por parametro
+	public List<Topico> procurarTopico(String busca) throws TopicoInexistenteException {
+		return cadastroTopico.procurarTopicoTitulo(busca);
+	}
 }

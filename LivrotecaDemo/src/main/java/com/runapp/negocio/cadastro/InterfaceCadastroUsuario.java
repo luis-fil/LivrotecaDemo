@@ -9,13 +9,13 @@ public interface InterfaceCadastroUsuario {
 
 	Usuario procurarUsuarioEmail(String email) throws UsuarioNaoExisteException;
 
-	Usuario adicionarUsuario(Usuario usuario) throws UsuarioDuplicadoException;
+	Usuario cadastrarUsuario(Usuario usuario) throws UsuarioDuplicadoException;
 	
 	void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException;
 
 	List<Usuario> listarUsuarios();
 
-	Usuario procurarUsuarioId(Long id);
+	Usuario procurarUsuarioId(Long id) throws UsuarioNaoExisteException;
 
 	boolean existeUsuarioId(Long id);
 
