@@ -10,7 +10,6 @@ import com.runapp.dados.InterfaceRepositorioForum;
 import com.runapp.negocio.basica.foruns.Forum;
 import com.runapp.negocio.cadastro.exception.ForumDuplicadoException;
 import com.runapp.negocio.cadastro.exception.ForumInexistenteException;
-import com.runapp.negocio.cadastro.exception.ForumInvalidoException;
 /**
  * Essa classe gerencia o cadastro no repositorio de Forum
  * @author Luis Filipe
@@ -25,8 +24,7 @@ public class CadastroForum implements InterfaceCadastroForum{
 		return colecaoForum.findById(id);
 	}
 	
-	public Forum salvarForum(Forum f) throws ForumInvalidoException, ForumDuplicadoException{
-		if(f == null) throw new ForumInvalidoException();
+	public Forum salvarForum(Forum f) throws ForumDuplicadoException{
 		if(localizarForumId(f.getId())!= null) throw new ForumDuplicadoException(f.getId());
 		if(colecaoForum.findByTitulo(f.getTitulo()) != null) throw new ForumDuplicadoException(f.getTitulo());
 		return colecaoForum.save(f);

@@ -11,9 +11,7 @@ import com.runapp.dados.InterfaceRepositorioTopico;
 import com.runapp.negocio.basica.foruns.Forum;
 import com.runapp.negocio.basica.foruns.Topico;
 import com.runapp.negocio.cadastro.exception.ForumInexistenteException;
-import com.runapp.negocio.cadastro.exception.ForumInvalidoException;
 import com.runapp.negocio.cadastro.exception.TopicoInexistenteException;
-import com.runapp.negocio.cadastro.exception.TopicoInvalidoException;
 /**
  * Essa classe gerencia o cadastro no repositorio de Topico
  * @author Luis Filipe
@@ -36,9 +34,7 @@ public class CadastroTopico implements InterfaceCadastroTopico{
 		return colecaoTopico.findById(id);
 	}
 
-	public Topico salvarTopico(Topico t) throws TopicoInvalidoException, ForumInvalidoException, ForumInexistenteException{
-		if(t == null) throw new TopicoInvalidoException();
-		if(t.getForum() == null) throw new ForumInvalidoException(t);
+	public Topico salvarTopico(Topico t) throws ForumInexistenteException{
 		if(colecaoForum.findById(t.getForum().getId()) == null) throw new ForumInexistenteException(t);
 		return colecaoTopico.save(t);
 	}

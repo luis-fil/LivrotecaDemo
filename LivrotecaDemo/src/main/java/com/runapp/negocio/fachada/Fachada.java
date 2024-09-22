@@ -96,6 +96,10 @@ public class Fachada {
     public void avaliarLivro(Long idLivro, Cliente cliente, String titulo, String corpo, double nota) throws LivroNaoExisteException {
         cadastroLivro.avaliarLivro(idLivro, cliente, titulo, corpo, nota);
     }
+    public void removerAvaliacao(Long idLivro, Long idAvaliacao) throws LivroNaoExisteException, AvaliacaoNaoExisteException {
+    	cadastroLivro.removerAvaliacao(idLivro, idAvaliacao);
+    }
+    
     public void aumentarQuantidade(Long idLivro, int quantidade) throws LivroNaoExisteException {
         cadastroLivro.aumentarQuantidade(idLivro, quantidade);
     }
@@ -153,12 +157,22 @@ public class Fachada {
 	
 	// Forum - SALVAR
 	public Forum salvarForum(Forum forum) throws ForumInvalidoException, ForumDuplicadoException {
+		if(forum == null) throw new ForumInvalidoException();
 		return cadastroForum.salvarForum(forum);
 	}
-	public Topico salvarTopico(Topico topico) throws TopicoInvalidoException, ForumInvalidoException, ForumInexistenteException {
+	public Topico salvarTopico(Topico topico) throws TopicoInvalidoException, ForumInvalidoException, ForumInexistenteException, UsuarioNaoExisteException, UsuarioInvalidoException {
+		if(topico == null) throw new TopicoInvalidoException();
+		Usuario u = cadastroUsuario.procurarUsuarioId(topico.getRemetente().getId());
+		if (u == null) throw new UsuarioInvalidoException();
+		if(topico.getForum() == null) throw new ForumInvalidoException(topico);
 		return cadastroTopico.salvarTopico(topico);
 	}
-	public Mensagem salvarMensagem(Mensagem mensagem) throws MensagemInvalidaException, TopicoInvalidoException, ForumInvalidoException, TopicoInexistenteException, ForumInexistenteException {
+	public Mensagem salvarMensagem(Mensagem mensagem) throws MensagemInvalidaException, TopicoInvalidoException, ForumInvalidoException, TopicoInexistenteException, ForumInexistenteException, NaoEhClienteException, UsuarioInvalidoException {
+		if(mensagem == null) throw new MensagemInvalidaException();
+		if(mensagem.getTopico() == null) throw new TopicoInvalidoException();
+		if(mensagem.getTopico().getForum() == null) throw new ForumInvalidoException();
+		Usuario u = cadastroUsuario.procurarUsuarioId(mensagem.getRementente().getId());
+		if(u == null) throw new UsuarioInvalidoException();
 		return cadastroMensagem.salvarMensagem(mensagem);
 	}
 	

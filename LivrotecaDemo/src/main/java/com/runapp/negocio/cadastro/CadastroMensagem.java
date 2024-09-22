@@ -12,11 +12,8 @@ import com.runapp.dados.InterfaceRepositorioTopico;
 import com.runapp.negocio.basica.foruns.Mensagem;
 import com.runapp.negocio.basica.foruns.Topico;
 import com.runapp.negocio.cadastro.exception.ForumInexistenteException;
-import com.runapp.negocio.cadastro.exception.ForumInvalidoException;
 import com.runapp.negocio.cadastro.exception.MensagemInexistenteException;
-import com.runapp.negocio.cadastro.exception.MensagemInvalidaException;
 import com.runapp.negocio.cadastro.exception.TopicoInexistenteException;
-import com.runapp.negocio.cadastro.exception.TopicoInvalidoException;
 /**
  * Essa classe gerencia o cadastro no repositorio de Mensagem
  * @author Luis Filipe
@@ -35,11 +32,8 @@ public class CadastroMensagem implements InterfaceCadastroMensagem{
 		return colecaoMensagem.findById(id);
 	}
 
-	public Mensagem salvarMensagem(Mensagem m) throws MensagemInvalidaException, TopicoInvalidoException, ForumInvalidoException, TopicoInexistenteException, ForumInexistenteException{
-		if(m == null) throw new MensagemInvalidaException();
-		if(m.getTopico() == null) throw new TopicoInvalidoException();
+	public Mensagem salvarMensagem(Mensagem m) throws TopicoInexistenteException, ForumInexistenteException{
 		if(colecaoTopico.findById(m.getTopico().getId()) == null) throw new TopicoInexistenteException(m);
-		if(m.getTopico().getForum() == null) throw new ForumInvalidoException();
 		if(colecaoForum.findById(m.getTopico().getForum().getId()) == null) throw new ForumInexistenteException(m);
 		return colecaoMensagem.save(m);
 	}
