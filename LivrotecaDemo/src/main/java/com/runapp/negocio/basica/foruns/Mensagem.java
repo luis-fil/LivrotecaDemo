@@ -60,4 +60,8 @@ public class Mensagem {
 		this.rementente = remetente;
 		this.topico = topico;
 	}
+	public Mensagem orElse(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
