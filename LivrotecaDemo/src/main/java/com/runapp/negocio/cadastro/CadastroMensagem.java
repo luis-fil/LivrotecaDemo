@@ -1,6 +1,9 @@
 package com.runapp.negocio.cadastro;
 
-import java.util.List;import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.runapp.dados.InterfaceRepositorioForum;
@@ -14,7 +17,11 @@ import com.runapp.negocio.cadastro.exception.MensagemInexistenteException;
 import com.runapp.negocio.cadastro.exception.MensagemInvalidaException;
 import com.runapp.negocio.cadastro.exception.TopicoInexistenteException;
 import com.runapp.negocio.cadastro.exception.TopicoInvalidoException;
-
+/**
+ * Essa classe gerencia o cadastro no repositorio de Mensagem
+ * @author Luis Filipe
+ * @version 1.02
+ */
 @Service
 public class CadastroMensagem implements InterfaceCadastroMensagem{
 	@Autowired
@@ -24,7 +31,7 @@ public class CadastroMensagem implements InterfaceCadastroMensagem{
 	@Autowired
 	private InterfaceRepositorioForum colecaoForum;
 
-	public Mensagem localizarMensagemId(long id) {
+	public Optional<Mensagem> localizarMensagemId(long id) {
 		return colecaoMensagem.findById(id);
 	}
 

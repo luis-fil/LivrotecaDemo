@@ -14,7 +14,11 @@ import com.runapp.negocio.cadastro.exception.ForumInexistenteException;
 import com.runapp.negocio.cadastro.exception.ForumInvalidoException;
 import com.runapp.negocio.cadastro.exception.TopicoInexistenteException;
 import com.runapp.negocio.cadastro.exception.TopicoInvalidoException;
-
+/**
+ * Essa classe gerencia o cadastro no repositorio de Topico
+ * @author Luis Filipe
+ * @version 1.06
+ */
 @Service
 public class CadastroTopico implements InterfaceCadastroTopico{
 	@Autowired

@@ -11,7 +11,11 @@ import com.runapp.negocio.basica.foruns.Forum;
 import com.runapp.negocio.cadastro.exception.ForumDuplicadoException;
 import com.runapp.negocio.cadastro.exception.ForumInexistenteException;
 import com.runapp.negocio.cadastro.exception.ForumInvalidoException;
-
+/**
+ * Essa classe gerencia o cadastro no repositorio de Forum
+ * @author Luis Filipe
+ * @version 1.06
+ */
 @Service
 public class CadastroForum implements InterfaceCadastroForum{
 	@Autowired

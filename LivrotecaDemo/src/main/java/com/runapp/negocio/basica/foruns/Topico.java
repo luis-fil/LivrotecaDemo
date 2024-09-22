@@ -7,7 +7,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-
+/**
+ * Essa eh a classe basica de Topico
+ * @author Luis Filipe
+ * @version 1.02
+ */
 @Entity
 public class Topico {
 	@Id

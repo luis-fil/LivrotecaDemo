@@ -8,7 +8,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import java.util.Calendar;
-
+/**
+ * Essa eh a classe basica de Mensagem
+ * @author Luis Filipe
+ * @version 1.02
+ */
 @Entity
 public class Mensagem {
 	@Id
@@ -59,9 +63,5 @@ public class Mensagem {
 		this.data = data;
 		this.rementente = remetente;
 		this.topico = topico;
-	}
-	public Mensagem orElse(Object object) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

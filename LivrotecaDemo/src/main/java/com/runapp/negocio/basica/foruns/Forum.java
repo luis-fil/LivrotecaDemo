@@ -4,7 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+/**
+ * Essa eh a classe basica de Forum
+ * @author Luis Filipe
+ * @version 1.03
+ */
 @Entity
 public class Forum {
 	@Id
