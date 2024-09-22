@@ -41,7 +41,7 @@ public class CadastroLivro implements InterfaceCadastroLivro {
 	public void atualizarLivro(Long idLivro, String novoTitulo, String novoAutor, double novoValorLivroFisico, double novoValorEbook, 
             int novoNumeroPaginas, String novoGenero, String novaSinopse, String novaEditora, int novaQuantidade) 
             		throws LivroNaoExisteException {
-		Livro livro = colecaoLivros.findById(idLivro);
+		Livro livro = colecaoLivros.findById(idLivro).orElse(null);
 		if(livro != null) {
 			livro.setTitulo(novoTitulo);
 			livro.setAutor(novoAutor);
@@ -61,7 +61,7 @@ public class CadastroLivro implements InterfaceCadastroLivro {
 	@Override
 	public void avaliarLivro(Long idLivro, Cliente cliente, String titulo, String corpo, double nota)
 			throws LivroNaoExisteException {
-        Livro livro = colecaoLivros.findById(idLivro);
+        Livro livro = colecaoLivros.findById(idLivro).orElse(null);
         if(livro != null) {
         	Avaliacao avaliacao = new Avaliacao(titulo, corpo, nota, livro, cliente);
         	livro.getAvaliacoes().add(avaliacao);
@@ -76,7 +76,7 @@ public class CadastroLivro implements InterfaceCadastroLivro {
 	@Override
 	public void removerAvaliacao(Long idLivro, Long idAvaliacao)
 	        throws LivroNaoExisteException, AvaliacaoNaoExisteException {
-	    Livro livro = colecaoLivros.findById(idLivro);
+	    Livro livro = colecaoLivros.findById(idLivro).orElse(null);
 	    if (livro != null) {
 	        Avaliacao avaliacaoARemover = null;
 	        for (Avaliacao avaliacao : livro.getAvaliacoes()) {
@@ -114,7 +114,7 @@ public class CadastroLivro implements InterfaceCadastroLivro {
 	@Override
 	public void aumentarQuantidade(Long idLivro, int quantidade)
 			throws LivroNaoExisteException {
-		Livro livro = colecaoLivros.findById(idLivro);
+		Livro livro = colecaoLivros.findById(idLivro).orElse(null);
 		if(livro != null) {
 			livro.setQuantidade(livro.getQuantidade() + quantidade);
 			colecaoLivros.save(livro);
@@ -127,7 +127,7 @@ public class CadastroLivro implements InterfaceCadastroLivro {
 	@Override
 	public void diminuirQuantidade(Long idLivro, int quantidade)
 			throws LivroNaoExisteException, QuantidadeInsuficienteException {
-		Livro livro = colecaoLivros.findById(idLivro);
+		Livro livro = colecaoLivros.findById(idLivro).orElse(null);
 		if(livro != null) {
 			if (livro.getQuantidade() < quantidade) {
 				throw new QuantidadeInsuficienteException(quantidade, livro.getQuantidade());
@@ -148,7 +148,7 @@ public class CadastroLivro implements InterfaceCadastroLivro {
 	@Override
 	public Livro procurarLivroId(Long id)
 			throws LivroNaoExisteException{
-		Livro livro = colecaoLivros.findById(id);
+		Livro livro = colecaoLivros.findById(id).orElse(null);
 		if(livro != null) {
 			return livro;
 		}

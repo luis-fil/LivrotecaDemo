@@ -48,6 +48,6 @@ public class CadastroMensagem implements InterfaceCadastroMensagem{
 	}
 	
 	public void removerMensagem(String frase) {
-		colecaoMensagem.deleteAllByFraseContaining(frase);
+		colecaoMensagem.deleteAllByCorpoContaining(frase);
 	}	
 }

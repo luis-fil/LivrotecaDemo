@@ -16,5 +16,5 @@ import com.runapp.negocio.basica.foruns.Topico;
 public interface InterfaceRepositorioMensagem extends JpaRepository<Mensagem, Long>{
 	Optional<Mensagem> findById(long id);
 	List<Mensagem> findByTopico(Topico t);
-	void deleteAllByFraseContaining(String frase);
+	void deleteAllByCorpoContaining(String frase);
 }

@@ -2,6 +2,7 @@ package com.runapp.dados;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.runapp.negocio.basica.livros.Livro;
@@ -11,13 +12,7 @@ import com.runapp.negocio.basica.livros.Livro;
  * @version 1.0
  */
 @Repository
-public interface InterfaceRepositorioLivro {
-
-	Livro findById(Long idLivro);
-
-	void save(Livro livro);
-
-	List<Livro> findAll();
+public interface InterfaceRepositorioLivro extends JpaRepository<Livro, Long> {
 
 	Livro findByTitulo(String titulo);
 
