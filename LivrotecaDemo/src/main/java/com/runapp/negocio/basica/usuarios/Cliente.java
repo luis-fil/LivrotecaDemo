@@ -6,6 +6,12 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 
+/**
+ * Essa classe representa um cliente do sistema
+ * @author José Matheus
+ * @version 1.0
+ */
+
 @Entity
 public class Cliente extends Usuario{
 	@OneToOne(cascade = CascadeType.ALL)

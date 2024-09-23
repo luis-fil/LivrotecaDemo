@@ -5,6 +5,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+/**
+ * Essa classe representa um endereço de um cliente
+ * @author José Matheus
+ * @version 1.0
+ */
+
 @Entity
 public class Endereco {
 	@Id

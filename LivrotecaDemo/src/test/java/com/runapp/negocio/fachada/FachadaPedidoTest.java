@@ -23,6 +23,10 @@ import com.runapp.negocio.fachada.exception.QuantidadeInvalidaException;
 
 import jakarta.transaction.Transactional;
 
+/**
+ * @author José Matheus
+ * @version 1.0
+ */
 @SpringBootTest
 @Transactional
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

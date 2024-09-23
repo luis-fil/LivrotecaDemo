@@ -1,5 +1,10 @@
 package com.runapp.negocio.cadastro.exception;
 
+/**
+ * Essa é uma classe de exceção para quando um usuário não existir no sistema
+ * @author José Matheus
+ * @version 1.0
+ */
 public class UsuarioNaoExisteException extends Exception {
 	private static final long serialVersionUID = 3314225175784890822L;
 	private String email;

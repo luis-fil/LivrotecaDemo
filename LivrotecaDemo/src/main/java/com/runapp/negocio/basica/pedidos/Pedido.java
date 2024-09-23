@@ -14,6 +14,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
+/**
+ * Essa classe representa um pedido de um cliente
+ * @author José Matheus
+ * @version 1.0
+ */
+
 @Entity
 public class Pedido {
 	@Id

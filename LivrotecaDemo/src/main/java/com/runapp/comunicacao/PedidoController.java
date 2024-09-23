@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.runapp.negocio.basica.pedidos.ItemPedido;
+import com.runapp.comunicacao.dto.RequisicaoAdicionarLivroPedido;
 import com.runapp.negocio.basica.pedidos.Pedido;
 import com.runapp.negocio.basica.usuarios.Cliente;
 import com.runapp.negocio.cadastro.exception.LivroNaoExisteException;
@@ -26,6 +26,11 @@ import com.runapp.negocio.fachada.exception.ClienteNaoExisteException;
 import com.runapp.negocio.fachada.exception.PedidoVazioException;
 import com.runapp.negocio.fachada.exception.QuantidadeInvalidaException;
 
+/**
+ * Essa classe é o controlador dos endpoints relacionados aos pedidos
+ * @author José Matheus
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/api")
 public class PedidoController {
@@ -43,9 +48,9 @@ public class PedidoController {
 	}
 	
 	@PatchMapping("/cliente/{id}/pedido")
-	public ResponseEntity<String> adicionarLivroPedidoCliente(@PathVariable long id, @RequestBody ItemPedido item) {
+	public ResponseEntity<String> adicionarLivroPedidoCliente(@PathVariable long id, @RequestBody RequisicaoAdicionarLivroPedido livro) {
 		try {
-			fachada.adicionarLivroPedidoCliente(item.getLivro().getId(), item.getQuantidade(), item.isEbook(), id);
+			fachada.adicionarLivroPedidoCliente(livro.getIdLivro(), livro.getQuantidade(), livro.isEbook(), id);
 			return ResponseEntity.ok("Livro adicionado ao pedido com sucesso!");
 		} catch (UsuarioNaoExisteException | ClienteNaoExisteException | LivroNaoExisteException | QuantidadeInvalidaException | QuantidadeInsuficienteException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
@@ -82,7 +87,7 @@ public class PedidoController {
 		}
 	}
 	
-	@GetMapping("/admin/pedido")
+	@GetMapping("/admin/pedido/extrato")
 	public ResponseEntity<List<Pedido>> exibirExtrato() {
 		return ResponseEntity.ok(fachada.exibirExtrato());
 	}

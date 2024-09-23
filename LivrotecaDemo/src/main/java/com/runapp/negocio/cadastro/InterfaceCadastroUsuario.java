@@ -6,6 +6,10 @@ import com.runapp.negocio.cadastro.exception.TipoDiferenteUsuarioException;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 
+/**
+ * @author José Matheus
+ * @version 1.0
+ */
 public interface InterfaceCadastroUsuario {
 
 	Usuario procurarUsuarioEmail(String email) throws UsuarioNaoExisteException;

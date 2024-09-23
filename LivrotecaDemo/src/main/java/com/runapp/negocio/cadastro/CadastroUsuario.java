@@ -13,6 +13,11 @@ import com.runapp.negocio.cadastro.exception.TipoDiferenteUsuarioException;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 
+/**
+ * Essa classe implementa os métodos necessários para manipulação do usuário
+ * @author José Matheus
+ * @version 1.0
+ */
 @Service
 public class CadastroUsuario implements InterfaceCadastroUsuario {
 	@Autowired
@@ -52,6 +57,11 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 		return repositorioUsuario.existsById(id);
 	}
 
+	/**
+	 *  Método utilizado para salvar um usuário que sofreu alguma alteração.
+	 *  Qualquer informação do usuário pode ser alterada, menos seu id, por isso há 
+	 *  verificações caso mude o email.
+	 */
 	@Override
 	public Usuario salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException, TipoDiferenteUsuarioException {
 		Usuario u = procurarUsuarioId(usuario.getId());

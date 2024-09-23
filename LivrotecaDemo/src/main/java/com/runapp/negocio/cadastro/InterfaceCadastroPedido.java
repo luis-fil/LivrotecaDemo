@@ -4,6 +4,10 @@ import java.util.List;
 
 import com.runapp.negocio.basica.pedidos.Pedido;
 
+/**
+ * @author José Matheus
+ * @version 1.0
+ */
 public interface InterfaceCadastroPedido {
 
 	List<Pedido> exibirHistoricoCliente(Long idCliente);

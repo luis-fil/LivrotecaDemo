@@ -8,6 +8,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
+/**
+ * Essa classe representa os itens de um pedido
+ * @author José Matheus
+ * @version 1.0
+ */
+
 @Entity
 public class ItemPedido {
 	@Id

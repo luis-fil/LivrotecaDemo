@@ -17,6 +17,11 @@ import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 import com.runapp.negocio.fachada.Fachada;
 
+/**
+ * Essa classe é o controlador dos endpoints relacionados ao usuário
+ * @author José Matheus
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/api")
 public class UsuarioController {

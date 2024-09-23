@@ -131,7 +131,7 @@ public class Fachada {
         return cadastroLivro.procurarLivroGenero(genero);
     }
     
-	// Negocio Usuario-Pedido
+	// Negocio Cliente-Pedido
 	public void cancelarPedidoCliente(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException, TipoDiferenteUsuarioException {
 		Cliente cliente = procurarClienteId(id);
 		

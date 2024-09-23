@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 import com.runapp.dados.InterfaceRepositorioPedido;
 import com.runapp.negocio.basica.pedidos.Pedido;
 
+/**
+ * Essa classe implementa os métodos necessários para manipulação dos pedidos
+ * @author José Matheus
+ * @version 1.0
+ */
 @Service
 public class CadastroPedido implements InterfaceCadastroPedido {
 	@Autowired

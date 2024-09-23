@@ -11,6 +11,10 @@ import com.runapp.negocio.basica.usuarios.Cliente;
 import com.runapp.negocio.basica.usuarios.Endereco;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 
+/**
+ * @author José Matheus
+ * @version 1.0
+ */
 @SpringBootTest
 class CadastroUsuarioTest {
 	@Autowired
