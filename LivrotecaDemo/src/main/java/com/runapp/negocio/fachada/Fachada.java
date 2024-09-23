@@ -59,8 +59,8 @@ public class Fachada {
 	public boolean existeUsuarioId(Long id) {
 		return cadastroUsuario.existeUsuarioId(id);
 	}
-	public void salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
-		cadastroUsuario.salvarAlteracaoUsuario(usuario);
+	public Usuario salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
+		return cadastroUsuario.salvarAlteracaoUsuario(usuario);
 	}
 	public Cliente procurarClienteId(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException {
 		Usuario u = procurarUsuarioId(id);
