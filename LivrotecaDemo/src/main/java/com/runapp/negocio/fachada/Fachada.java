@@ -18,8 +18,11 @@ import com.runapp.negocio.cadastro.InterfaceCadastroTopico;
 import com.runapp.negocio.cadastro.InterfaceCadastroUsuario;
 import com.runapp.negocio.cadastro.exception.*;
 import com.runapp.negocio.fachada.exception.ClienteNaoExisteException;
+import com.runapp.negocio.fachada.exception.ForumVazioException;
+import com.runapp.negocio.fachada.exception.MensagemVazioException;
 import com.runapp.negocio.fachada.exception.PedidoVazioException;
 import com.runapp.negocio.fachada.exception.QuantidadeInvalidaException;
+import com.runapp.negocio.fachada.exception.TopicoVazioException;
 import com.runapp.negocio.cadastro.InterfaceCadastroForum;
 import com.runapp.negocio.cadastro.InterfaceCadastroLivro;
 import com.runapp.negocio.cadastro.InterfaceCadastroMensagem;
@@ -171,33 +174,39 @@ public class Fachada {
 	}
 	
 	// Forum - SALVAR
-	public Forum salvarForum(Forum forum) throws ForumInvalidoException, ForumDuplicadoException {
-		if(forum == null) throw new ForumInvalidoException();
+	public Forum salvarForum(Forum forum) throws NullPointerException, ForumDuplicadoException {
+		if(forum == null) throw new NullPointerException("Forum invalido");
 		return cadastroForum.salvarForum(forum);
 	}
-	public Topico salvarTopico(Topico topico) throws TopicoInvalidoException, ForumInvalidoException, ForumInexistenteException, UsuarioNaoExisteException {
-		if(topico == null) throw new TopicoInvalidoException();
+	public Topico salvarTopico(Topico topico) throws ForumInexistenteException, UsuarioNaoExisteException, NullPointerException{
+		if(topico == null) throw new NullPointerException("Topico invalido");
 		procurarUsuarioId(topico.getRemetente().getId());
-		if(topico.getForum() == null) throw new ForumInvalidoException(topico);
+		if(topico.getForum() == null) throw new NullPointerException("Forum invalido");
 		return cadastroTopico.salvarTopico(topico);
 	}
-	public Mensagem salvarMensagem(Mensagem mensagem) throws MensagemInvalidaException, TopicoInvalidoException, ForumInvalidoException, TopicoInexistenteException, ForumInexistenteException, UsuarioNaoExisteException {
-		if(mensagem == null) throw new MensagemInvalidaException();
-		if(mensagem.getTopico() == null) throw new TopicoInvalidoException();
-		if(mensagem.getTopico().getForum() == null) throw new ForumInvalidoException();
+	public Mensagem salvarMensagem(Mensagem mensagem) throws TopicoInexistenteException, ForumInexistenteException, UsuarioNaoExisteException, NullPointerException {
+		if(mensagem == null) throw new NullPointerException("Mensagem invalida");
+		if(mensagem.getTopico() == null) throw new NullPointerException("Topico invalido");
+		if(mensagem.getTopico().getForum() == null) throw new NullPointerException("Forum invalido");
 		procurarUsuarioId(mensagem.getRementente().getId());
 		return cadastroMensagem.salvarMensagem(mensagem);
 	}
 	
 	// Forum - LISTAR
-	public List<Forum> listarForuns(){
-		return cadastroForum.listarForuns();
+	public List<Forum> listarForuns() throws ForumVazioException{
+		List<Forum> foruns = cadastroForum.listarForuns();
+		if(foruns.size() == 0) throw new ForumVazioException();
+		return foruns;
 	}
-	public List<Topico> listarTopicosForum(Forum forum){
-		return cadastroTopico.listarTopicosForum(forum);
+	public List<Topico> listarTopicosForum(Forum forum) throws TopicoVazioException{
+		List<Topico> topicos = cadastroTopico.listarTopicosForum(forum);
+		if(topicos.size() == 0) throw new TopicoVazioException();
+		return topicos;
 	}
-	public List<Mensagem> listarMensagensTopico(Topico topico){
-		return cadastroMensagem.listarMensagens(topico);
+	public List<Mensagem> listarMensagensTopico(Topico topico) throws MensagemVazioException{
+		List<Mensagem> mensagens = cadastroMensagem.listarMensagens(topico);
+		if(mensagens.size() == 0) throw new MensagemVazioException();
+		return mensagens;
 	}
 	
 	// Forum - REMOVER
@@ -224,18 +233,21 @@ public class Fachada {
 			cadastroForum.removerForumId(id);
 		} else throw new ForumInexistenteException(f);
 	}
-	public void removerTopico(Topico topico) throws TopicoInexistenteException, TopicoInvalidoException {
+	public void removerTopico(Topico topico) throws TopicoInexistenteException{
 		if(topico != null) {
 			cadastroMensagem.listarMensagens(topico).clear();
 			cadastroTopico.removerTopico(topico);
-		} else throw new TopicoInvalidoException();
+		} else throw new NullPointerException("Topico invalido");
 	}
-	public void removerTopicoId(long id) throws TopicoInexistenteException, TopicoInvalidoException {
-		Topico topico = cadastroTopico.localizarTopicoId(id).orElse(null);
+	public void removerTopicoId(long id) throws TopicoInexistenteException{
+		Topico topico = cadastroTopico.localizarTopicoId(id);
 		if(topico != null) {
 			cadastroMensagem.listarMensagens(topico).clear();
 			cadastroTopico.removerTopico(topico);
-		} else throw new TopicoInvalidoException();
+		} else throw new NullPointerException("O id informado nao consta no sistema");
+	}
+	public void removerMensagem(Mensagem mensagem) throws MensagemInexistenteException {
+		cadastroMensagem.removerMensagem(mensagem);
 	}
 	public void removerMensagemId(long id) throws MensagemInexistenteException {
 		cadastroMensagem.removerMensagemId(id);
@@ -249,13 +261,13 @@ public class Fachada {
 		return cadastroForum.localizarForumId(id);
 	}
 	public Topico localizarTopicoId(long id) {
-		return cadastroTopico.localizarTopicoId(id).orElse(null);
+		return cadastroTopico.localizarTopicoId(id);
 	}
 	public Mensagem localizarMensagemId(long id) {
-		return cadastroMensagem.localizarMensagemId(id).orElse(null);
+		return cadastroMensagem.localizarMensagemId(id);
 	}
 	// busca por parametro
 	public List<Topico> procurarTopico(String busca) throws TopicoInexistenteException {
-		return cadastroTopico.procurarTopicoTitulo(busca);
+		return cadastroTopico.procurarTopicoTitulo(busca);	
 	}
 }

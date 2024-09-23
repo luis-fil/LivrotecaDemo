@@ -1,7 +1,6 @@
 package com.runapp.negocio.cadastro;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,8 @@ public class CadastroMensagem implements InterfaceCadastroMensagem{
 	@Autowired
 	private InterfaceRepositorioForum colecaoForum;
 
-	public Optional<Mensagem> localizarMensagemId(long id) {
-		return colecaoMensagem.findById(id);
+	public Mensagem localizarMensagemId(long id) {
+		return colecaoMensagem.findById(id).orElse(null);
 	}
 
 	public Mensagem salvarMensagem(Mensagem m) throws TopicoInexistenteException, ForumInexistenteException{
@@ -49,5 +48,11 @@ public class CadastroMensagem implements InterfaceCadastroMensagem{
 	
 	public void removerMensagem(String frase) {
 		colecaoMensagem.deleteAllByCorpoContaining(frase);
+	}
+
+	public void removerMensagem(Mensagem mensagem) throws MensagemInexistenteException {
+		if(localizarMensagemId(mensagem.getId()) == null) throw new MensagemInexistenteException(mensagem.getId());
+		colecaoMensagem.delete(mensagem);
+		
 	}	
 }

@@ -1,7 +1,6 @@
 package com.runapp.negocio.cadastro;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,8 @@ public class CadastroTopico implements InterfaceCadastroTopico{
 		return busca;
 	}
 	
-	public Optional<Topico> localizarTopicoId(long id){
-		return colecaoTopico.findById(id);
+	public Topico localizarTopicoId(long id){
+		return colecaoTopico.findById(id).orElse(null);
 	}
 
 	public Topico salvarTopico(Topico t) throws ForumInexistenteException{

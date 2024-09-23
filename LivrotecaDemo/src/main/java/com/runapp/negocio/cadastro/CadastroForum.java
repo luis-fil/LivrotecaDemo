@@ -24,7 +24,7 @@ public class CadastroForum implements InterfaceCadastroForum{
 	}
 	
 	public Forum salvarForum(Forum f) throws ForumDuplicadoException{
-		if(localizarForumId(f.getId())!= null) throw new ForumDuplicadoException(f.getId());
+		if(localizarForumId(f.getId()) != null) throw new ForumDuplicadoException(f.getId());
 		if(colecaoForum.findByTitulo(f.getTitulo()).isPresent()) throw new ForumDuplicadoException(f.getTitulo());
 		return colecaoForum.save(f);
 	}
