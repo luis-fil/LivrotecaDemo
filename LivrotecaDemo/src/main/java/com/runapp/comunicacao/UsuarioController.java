@@ -16,6 +16,7 @@ import com.runapp.negocio.cadastro.exception.TipoDiferenteUsuarioException;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 import com.runapp.negocio.fachada.Fachada;
+import com.runapp.negocio.fachada.exception.ClienteNaoExisteException;
 
 /**
  * Essa classe é o controlador dos endpoints relacionados ao usuário
@@ -69,8 +70,9 @@ public class UsuarioController {
 	public ResponseEntity<?> atualizarDadosCliente(@PathVariable long id, @RequestBody Cliente c) {
 		c.setId(id);
 		try {
+			c.setPedidoPendente(fachada.procurarClienteId(id).getPedidoPendente());
 			return ResponseEntity.ok((Cliente) fachada.salvarAlteracaoUsuario(c));
-		} catch (UsuarioNaoExisteException | UsuarioDuplicadoException | TipoDiferenteUsuarioException e) {
+		} catch (UsuarioNaoExisteException | UsuarioDuplicadoException | TipoDiferenteUsuarioException | ClienteNaoExisteException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
