@@ -3,6 +3,7 @@ package com.runapp.negocio.basica.livros;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class Livro {
 	private String sinopse;
 	private String editora;
 	private int quantidade;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Avaliacao> avaliacoes;
 	private double nota;
 	

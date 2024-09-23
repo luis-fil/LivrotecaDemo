@@ -45,6 +45,7 @@ class FachadaLivroTest {
         Avaliacao avaliacaoAdicionada = livroAvaliado.getAvaliacoes().get(0);
         assertNotNull(avaliacaoAdicionada);
         assertEquals(10.0, avaliacaoAdicionada.getNota());
+        assertEquals("Livro muito bom", avaliacaoAdicionada.getTitulo());
         assertEquals("O livro e otimo, palavras bem escolhidas", avaliacaoAdicionada.getCorpo());
     }
 }
