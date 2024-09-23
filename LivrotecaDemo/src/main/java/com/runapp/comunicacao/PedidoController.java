@@ -62,7 +62,7 @@ public class PedidoController {
 		}
 	}
 	
-	@PostMapping
+	@PostMapping("/cliente/{id}/pedido")
 	public ResponseEntity<String> finalizarCompraCliente(@PathVariable long id) {
 		try {
 			double valorTotal = fachada.finalizarPedidoCliente(id);

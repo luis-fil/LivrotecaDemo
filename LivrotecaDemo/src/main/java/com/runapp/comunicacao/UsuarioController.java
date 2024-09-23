@@ -25,8 +25,9 @@ public class UsuarioController {
 	
 	@PostMapping("/cliente")
 	public ResponseEntity<?> cadastrarCliente(@RequestBody Cliente c) {
+		Cliente cliente = new Cliente(c.getNome(), c.getEmail(), c.getSenha(), c.getEndereco());
 		try {
-			return ResponseEntity.ok((Cliente) fachada.cadastrarUsuario(c));
+			return ResponseEntity.ok((Cliente) fachada.cadastrarUsuario(cliente));
 		} catch (UsuarioDuplicadoException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

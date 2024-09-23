@@ -3,6 +3,7 @@ package com.runapp.negocio.basica.pedidos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.runapp.negocio.basica.usuarios.Cliente;
 
 import jakarta.persistence.CascadeType;
@@ -19,6 +20,7 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@ManyToOne
+	@JsonIgnoreProperties({"senha", "pedidoPendente"})
 	private Cliente cliente;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<ItemPedido> itens;
@@ -28,9 +30,9 @@ public class Pedido {
 		this.itens = new ArrayList<ItemPedido>();
 	}
 	public Pedido(Cliente cliente, String status) {
-		this();
 		this.cliente = cliente;
 		this.status = status;
+		this.itens = new ArrayList<ItemPedido>();
 	}
 	
 	public double getValorTotal() {
