@@ -32,6 +32,11 @@ public class UsuarioController {
 		return (Administrador) fachada.cadastrarUsuario(a);
 	}
 	
+	@GetMapping("/usuario/{id}")
+	public Usuario exibirUsuario(@PathVariable long id) throws UsuarioNaoExisteException {
+		return fachada.procurarUsuarioId(id);
+	}
+	
 	@GetMapping("/admin/usuario/{email}")
 	public Usuario procurarConta(@PathVariable String email) throws UsuarioNaoExisteException {
 		return fachada.procurarUsuarioEmail(email);
