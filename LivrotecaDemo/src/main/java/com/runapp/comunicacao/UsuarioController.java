@@ -1,6 +1,7 @@
 package com.runapp.comunicacao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.runapp.negocio.basica.usuarios.Administrador;
 import com.runapp.negocio.basica.usuarios.Cliente;
-import com.runapp.negocio.basica.usuarios.Usuario;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 import com.runapp.negocio.fachada.Fachada;
@@ -23,34 +23,58 @@ public class UsuarioController {
 	public Fachada fachada;
 	
 	@PostMapping("/cliente")
-	public Cliente cadastrarCliente(@RequestBody Cliente c) throws UsuarioDuplicadoException {
-		return (Cliente) fachada.cadastrarUsuario(c);
+	public ResponseEntity<?> cadastrarCliente(@RequestBody Cliente c) {
+		try {
+			return ResponseEntity.ok((Cliente) fachada.cadastrarUsuario(c));
+		} catch (UsuarioDuplicadoException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@PostMapping("/admin")
-	public Administrador cadastrarAdministrador(@RequestBody Administrador a) throws UsuarioDuplicadoException {
-		return (Administrador) fachada.cadastrarUsuario(a);
+	public ResponseEntity<?> cadastrarAdministrador(@RequestBody Administrador a) {
+		try {
+			return ResponseEntity.ok((Administrador) fachada.cadastrarUsuario(a));
+		} catch (UsuarioDuplicadoException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@GetMapping("/usuario/{id}")
-	public Usuario exibirUsuario(@PathVariable long id) throws UsuarioNaoExisteException {
-		return fachada.procurarUsuarioId(id);
+	public ResponseEntity<?> exibirUsuario(@PathVariable long id) {
+		try {
+			return ResponseEntity.ok(fachada.procurarUsuarioId(id));
+		} catch (UsuarioNaoExisteException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@GetMapping("/admin/usuario/{email}")
-	public Usuario procurarConta(@PathVariable String email) throws UsuarioNaoExisteException {
-		return fachada.procurarUsuarioEmail(email);
+	public ResponseEntity<?> procurarConta(@PathVariable String email) {
+		try {
+			return ResponseEntity.ok(fachada.procurarUsuarioEmail(email));
+		} catch (UsuarioNaoExisteException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/cliente/{id}")
-	public Cliente atualizarDadosCliente(@PathVariable long id, @RequestBody Cliente c) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
+	public ResponseEntity<?> atualizarDadosCliente(@PathVariable long id, @RequestBody Cliente c) {
 		c.setId(id);
-		return (Cliente) fachada.salvarAlteracaoUsuario(c);
+		try {
+			return ResponseEntity.ok((Cliente) fachada.salvarAlteracaoUsuario(c));
+		} catch (UsuarioNaoExisteException | UsuarioDuplicadoException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/admin/{id}")
-	public Administrador atualizarDadosAdministrador(@PathVariable long id, @RequestBody Administrador a) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
+	public ResponseEntity<?> atualizarDadosAdministrador(@PathVariable long id, @RequestBody Administrador a) {
 		a.setId(id);
-		return (Administrador) fachada.salvarAlteracaoUsuario(a);
+		try {
+			return ResponseEntity.ok((Administrador) fachada.salvarAlteracaoUsuario(a));
+		} catch (UsuarioNaoExisteException | UsuarioDuplicadoException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 }

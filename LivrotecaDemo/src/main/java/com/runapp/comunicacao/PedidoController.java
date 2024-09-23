@@ -3,6 +3,7 @@ package com.runapp.comunicacao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,37 +32,57 @@ public class PedidoController {
 	public Fachada fachada;
 	
 	@GetMapping("/cliente/{id}/pedido")
-	public Pedido exibirPedidoCliente(@PathVariable long id) throws UsuarioNaoExisteException, ClienteNaoExisteException {
-		Cliente c = fachada.procurarClienteId(id);
-		return c.getPedidoPendente();
+	public ResponseEntity<?> exibirPedidoCliente(@PathVariable long id) {
+		try {
+			Cliente c = fachada.procurarClienteId(id);
+			return ResponseEntity.ok(c.getPedidoPendente());
+		} catch (UsuarioNaoExisteException | ClienteNaoExisteException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@PatchMapping("/cliente/{id}/pedido")
-	public String adicionarLivroPedidoCliente(@PathVariable long id, @RequestBody ItemPedido item) throws UsuarioNaoExisteException, ClienteNaoExisteException, LivroNaoExisteException, QuantidadeInvalidaException, QuantidadeInsuficienteException {
-		fachada.adicionarLivroPedidoCliente(item.getLivro().getId(), item.getQuantidade(), item.isEbook(), id);
-		return "Livro adicionado ao pedido com sucesso!";
+	public ResponseEntity<String> adicionarLivroPedidoCliente(@PathVariable long id, @RequestBody ItemPedido item) {
+		try {
+			fachada.adicionarLivroPedidoCliente(item.getLivro().getId(), item.getQuantidade(), item.isEbook(), id);
+			return ResponseEntity.ok("Livro adicionado ao pedido com sucesso!");
+		} catch (UsuarioNaoExisteException | ClienteNaoExisteException | LivroNaoExisteException | QuantidadeInvalidaException | QuantidadeInsuficienteException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@DeleteMapping("/cliente/{id}/pedido")
-	public String cancelarPedidoCliente(@PathVariable long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException {
-		fachada.cancelarPedidoCliente(id);
-		return "Pedido cancelado!";
+	public ResponseEntity<String> cancelarPedidoCliente(@PathVariable long id) {
+		try {
+			fachada.cancelarPedidoCliente(id);
+			return ResponseEntity.ok("Pedido cancelado!");
+		} catch (UsuarioNaoExisteException | ClienteNaoExisteException | UsuarioDuplicadoException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@PostMapping
-	public String finalizarCompraCliente(@PathVariable long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException, LivroNaoExisteException, QuantidadeInsuficienteException, PedidoVazioException {
-		double valorTotal = fachada.finalizarPedidoCliente(id);
-		return String.format("Compra finalizada com sucesso! Valor total: R$%.2f", valorTotal);
+	public ResponseEntity<String> finalizarCompraCliente(@PathVariable long id) {
+		try {
+			double valorTotal = fachada.finalizarPedidoCliente(id);
+			return ResponseEntity.ok(String.format("Compra finalizada com sucesso! Valor total: R$%.2f", valorTotal));
+		} catch (UsuarioNaoExisteException | ClienteNaoExisteException | UsuarioDuplicadoException | LivroNaoExisteException | QuantidadeInsuficienteException | PedidoVazioException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@GetMapping("/cliente/{id}/pedido/historico")
-	public List<Pedido> exibirHistoricoCliente(@PathVariable long id) throws UsuarioNaoExisteException, ClienteNaoExisteException {
-		Cliente c = fachada.procurarClienteId(id);
-		return fachada.exibirHistoricoCliente(c.getId());
+	public ResponseEntity<?> exibirHistoricoCliente(@PathVariable long id) {
+		try {
+			Cliente c = fachada.procurarClienteId(id);
+			return ResponseEntity.ok(fachada.exibirHistoricoCliente(c.getId()));
+		} catch (UsuarioNaoExisteException | ClienteNaoExisteException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@GetMapping("/admin/pedido")
-	public List<Pedido> exibirExtrato() {
-		return fachada.exibirExtrato();
+	public ResponseEntity<List<Pedido>> exibirExtrato() {
+		return ResponseEntity.ok(fachada.exibirExtrato());
 	}
 }
