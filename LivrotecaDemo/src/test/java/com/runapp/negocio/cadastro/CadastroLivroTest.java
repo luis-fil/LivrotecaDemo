@@ -10,6 +10,10 @@ import com.runapp.negocio.basica.livros.Livro;
 import com.runapp.negocio.cadastro.exception.LivroJaExisteException;
 import com.runapp.negocio.cadastro.exception.LivroNaoExisteException;
 
+/**
+ * @author Letícia Baracho
+ * @version 1.0
+ */
 @SpringBootTest
 class CadastroLivroTest {
 

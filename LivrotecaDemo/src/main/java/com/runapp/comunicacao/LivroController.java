@@ -16,8 +16,12 @@ import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 import com.runapp.negocio.fachada.Fachada;
 import com.runapp.negocio.fachada.exception.ClienteNaoExisteException;
 
+/**
+ * @author Letícia Baracho
+ * @version 1.0
+ */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class LivroController {
 
     @Autowired

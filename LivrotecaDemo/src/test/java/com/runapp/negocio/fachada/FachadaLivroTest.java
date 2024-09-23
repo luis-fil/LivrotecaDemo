@@ -19,6 +19,10 @@ import com.runapp.negocio.fachada.exception.ClienteNaoExisteException;
 
 import jakarta.transaction.Transactional;
 
+/**
+ * @author Letícia Baracho
+ * @version 1.0
+ */
 @SpringBootTest
 @Transactional
 class FachadaLivroTest {

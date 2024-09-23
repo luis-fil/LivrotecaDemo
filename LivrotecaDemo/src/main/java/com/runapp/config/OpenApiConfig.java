@@ -17,6 +17,6 @@ public class OpenApiConfig {
                 .description("API para gerenciamento de livros e fóruns")
                 .contact(new Contact()
                     .name("José Matheus, Letícia Baracho e Luís Filipe")
-                    .email("leticia.baracho@ufape.edu.br")));
+                    .email("matheus.luciano@ufape.edu.br, leticia.baracho@ufape.edu.br, luis.fbferreira@ufape.edu.br")));
     }
 }
