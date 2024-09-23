@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,13 +89,13 @@ public class ForumController {
 	}
 	
 	@GetMapping("/usuario/{id}/forum")
-	public ResponseEntity<Forum> localizarForumId(@RequestBody long id){
+	public ResponseEntity<Forum> localizarForumId(@PathVariable long id){
 		Forum forum = fachada.localizarForumId(id);
 		if(forum == null) throw new NullPointerException("Forum nao encontrado");
 		return ResponseEntity.ok(forum);
 	}
 	
-	@GetMapping("/usuario/forum")
+	@GetMapping("/usuario/forum/topicos")
 	public ResponseEntity<?> listarTopicosForum(@RequestBody Forum forum){
 		try {
 			List<Topico> topicos = fachada.listarTopicosForum(forum);
@@ -104,8 +105,8 @@ public class ForumController {
 		}
 	}
 	
-	@GetMapping("/usuario/topico")
-	public ResponseEntity<?> procurarTopicos(@RequestBody String busca){
+	@GetMapping("/usuario/topico/busca")
+	public ResponseEntity<?> procurarTopicos(String busca){
 		try {
 			List<Topico> topicos = fachada.procurarTopico(busca);
 			return ResponseEntity.ok(topicos);
@@ -115,13 +116,13 @@ public class ForumController {
 	}
 	
 	@GetMapping("/usuario/{id}/topico")
-	public ResponseEntity<Topico> localizarTopicoId(@RequestBody long id){
+	public ResponseEntity<Topico> localizarTopicoId(@PathVariable long id){
 		Topico topico = fachada.localizarTopicoId(id);
 		if(topico == null) throw new NullPointerException("Topico nao encontrado");
 		return ResponseEntity.ok(topico);
 	}
 	
-	@GetMapping("/usuario/topico")
+	@GetMapping("/usuario/topico/mensagens")
 	public ResponseEntity<?> listarMensagensTopico(@RequestBody Topico topico){
 		try {
 			List<Mensagem> mensagens = fachada.listarMensagensTopico(topico);
@@ -131,14 +132,14 @@ public class ForumController {
 		}
 	}
 	
-	@GetMapping("/usuario/{id}/topico")
-	public ResponseEntity<Mensagem> localizarMensagemId(@RequestBody long id){
+	@GetMapping("/usuario/{id}/mensagem")
+	public ResponseEntity<Mensagem> localizarMensagemId(@PathVariable long id){
 		Mensagem mensagem = fachada.localizarMensagemId(id);
 		if(mensagem == null) throw new NullPointerException("Mensagem nao encontrada");
 		return ResponseEntity.ok(mensagem);
 	}
 	
-	@DeleteMapping("/admin/forum")
+	@DeleteMapping("/admin/forum/remover")
 	public ResponseEntity<String> removerForum(@RequestBody Forum forum){
 		try {
 			fachada.removerForum(forum);
@@ -150,8 +151,8 @@ public class ForumController {
 		}
 	}
 	
-	@DeleteMapping("/admin/{id}/forum")
-	public ResponseEntity<String> removerForumId(@RequestBody long id){
+	@DeleteMapping("/admin/{id}/forum/remover")
+	public ResponseEntity<String> removerForumId(@PathVariable long id){
 		try {
 			fachada.removerForumId(id);
 			Forum forum = fachada.localizarForumId(id);
@@ -163,7 +164,7 @@ public class ForumController {
 		}
 	}
 	
-	@DeleteMapping("/admin/topico")
+	@DeleteMapping("/admin/topico/remover")
 	public ResponseEntity<String> removerTopico(@RequestBody Topico topico){
 		try {
 			fachada.removerTopico(topico);
@@ -173,7 +174,7 @@ public class ForumController {
 		}
 	}
 	
-	@DeleteMapping("/admin/topico")
+	@DeleteMapping("/admin/mensagem/remover")
 	public ResponseEntity<String> removerMensagem(@RequestBody Mensagem mensagem){
 		try {
 			fachada.removerMensagem(mensagem);
@@ -183,8 +184,8 @@ public class ForumController {
 		}
 	}
 	
-	@DeleteMapping("/admin/topico")
-	public ResponseEntity<String> removerMensagemId(@RequestBody long id){
+	@DeleteMapping("/admin/{id}/mensagem/remover")
+	public ResponseEntity<String> removerMensagemId(@PathVariable long id){
 		try {
 			fachada.removerMensagemId(id);
 			return ResponseEntity.ok("mensagem removida com sucesso!");
@@ -193,7 +194,7 @@ public class ForumController {
 		}
 	}
 	
-	@DeleteMapping("/admin/topico")
+	@DeleteMapping("/admin/mensagem/busca/remover")
 	public ResponseEntity<String> removerMensagem(@RequestBody String frase){
 		fachada.removerMensagem(frase);
 		return ResponseEntity.ok("mensagem removida com sucesso!");
