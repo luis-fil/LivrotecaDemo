@@ -7,7 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+
 import java.util.Calendar;
+import java.util.Date;
 /**
  * Essa eh a classe basica de Mensagem
  * @author Luis Filipe
@@ -19,7 +21,7 @@ public class Mensagem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String corpo;
-	private Calendar data;
+	private Date horario;
 	@ManyToOne
 	private Usuario rementente;
 	@ManyToOne
@@ -46,11 +48,11 @@ public class Mensagem {
 	public void setTopico(Topico topico) {
 		this.topico = topico;
 	}
-	public Calendar getData() {
-		return data;
+	public Date getHorario() {
+		return horario;
 	}
-	public void setData(Calendar data) {
-		this.data = data;
+	public void setData(Date horario) {
+		this.horario = horario;
 	}
 	public long getId() {
 		return id;
@@ -61,9 +63,9 @@ public class Mensagem {
 	public Mensagem(Topico topico) {
 		this.topico = topico;
 	}
-	public Mensagem(String corpo, Calendar data, Usuario remetente, Topico topico) {
+	public Mensagem(String corpo, Usuario remetente, Topico topico) {
 		this.corpo = corpo;
-		this.data = data;
+		horario = Calendar.getInstance().getTime();
 		this.rementente = remetente;
 		this.topico = topico;
 	}

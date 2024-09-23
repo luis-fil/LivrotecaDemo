@@ -1,7 +1,6 @@
 package com.runapp.negocio.cadastro;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.runapp.negocio.basica.foruns.Forum;
 import com.runapp.negocio.cadastro.exception.ForumDuplicadoException;
@@ -17,5 +16,5 @@ public interface InterfaceCadastroForum {
 	List<Forum> listarForuns();
 	void removerForumId(long id) throws ForumInexistenteException;
 	void removerForum(Forum f) throws ForumInexistenteException;
-	Optional<Forum> localizarForumId(long id);
+	Forum localizarForumId(long id);
 }

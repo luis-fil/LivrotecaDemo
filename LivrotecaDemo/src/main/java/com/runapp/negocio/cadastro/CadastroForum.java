@@ -1,7 +1,6 @@
 package com.runapp.negocio.cadastro;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +19,13 @@ public class CadastroForum implements InterfaceCadastroForum{
 	@Autowired
 	private InterfaceRepositorioForum colecaoForum;
 
-	public Optional<Forum> localizarForumId(long id) {
-		return colecaoForum.findById(id);
+	public Forum localizarForumId(long id) {
+		return colecaoForum.findById(id).orElse(null);
 	}
 	
 	public Forum salvarForum(Forum f) throws ForumDuplicadoException{
 		if(localizarForumId(f.getId())!= null) throw new ForumDuplicadoException(f.getId());
-		if(colecaoForum.findByTitulo(f.getTitulo()) != null) throw new ForumDuplicadoException(f.getTitulo());
+		if(colecaoForum.findByTitulo(f.getTitulo()).isPresent()) throw new ForumDuplicadoException(f.getTitulo());
 		return colecaoForum.save(f);
 	}
 	

@@ -212,7 +212,7 @@ public class Fachada {
 		cadastroForum.removerForum(forum);
 	}
 	public void removerForumId(long id) throws ForumInexistenteException, TopicoInexistenteException {
-		Forum f = cadastroForum.localizarForumId(id).orElse(null);
+		Forum f = cadastroForum.localizarForumId(id);
 		if(f!=null) {
 			List<Topico> topicos = cadastroTopico.listarTopicosForum(f);
 			List<Mensagem> mensagens;
@@ -246,7 +246,7 @@ public class Fachada {
 	
 	// Forum - BUSCA
 	public Forum localizarForumId(long id) {
-		return cadastroForum.localizarForumId(id).orElse(null);
+		return cadastroForum.localizarForumId(id);
 	}
 	public Topico localizarTopicoId(long id) {
 		return cadastroTopico.localizarTopicoId(id).orElse(null);

@@ -14,5 +14,5 @@ import com.runapp.negocio.basica.foruns.Forum;
 @Repository
 public interface InterfaceRepositorioForum extends JpaRepository<Forum, Long>{
 	Optional<Forum> findById(long id);
-	Forum findByTitulo(String titulo);
+	Optional<Forum> findByTitulo(String titulo);
 }
