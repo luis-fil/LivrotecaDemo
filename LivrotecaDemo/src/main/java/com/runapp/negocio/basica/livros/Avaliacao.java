@@ -27,6 +27,9 @@ public class Avaliacao {
 	@ManyToOne
 	private Cliente cliente;
 	
+	public Avaliacao() {		
+	}
+	
 	public Avaliacao(String titulo, String corpo, double nota, Livro livro, Cliente cliente) {
 		this.titulo = titulo;
 		this.corpo = corpo;

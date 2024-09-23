@@ -24,6 +24,9 @@ public class Topico {
 	@ManyToOne
 	private Forum forum;
 	
+	public Topico() {		
+	}
+	
 	public long getId() {
 		return id;
 	}

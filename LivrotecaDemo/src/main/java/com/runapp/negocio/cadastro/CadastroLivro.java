@@ -60,17 +60,16 @@ public class CadastroLivro implements InterfaceCadastroLivro {
 	
 	@Override
 	public void avaliarLivro(Long idLivro, Cliente cliente, String titulo, String corpo, double nota)
-			throws LivroNaoExisteException {
-        Livro livro = colecaoLivros.findById(idLivro).orElse(null);
-        if(livro != null) {
-        	Avaliacao avaliacao = new Avaliacao(titulo, corpo, nota, livro, cliente);
-        	livro.getAvaliacoes().add(avaliacao);
-        	atualizarNotaLivro(livro);
-        	colecaoLivros.save(livro);
-        }
-        else {
-        	throw new LivroNaoExisteException(idLivro);
-        }
+	        throws LivroNaoExisteException {
+	    Livro livro = colecaoLivros.findById(idLivro).orElse(null);
+	    if (livro != null) {
+	        Avaliacao avaliacao = new Avaliacao(titulo, corpo, nota, livro, cliente);
+	        livro.getAvaliacoes().add(avaliacao);
+	        atualizarNotaLivro(livro);
+	        colecaoLivros.save(livro);
+	    } else {
+	        throw new LivroNaoExisteException(idLivro);
+	    }
     }
 	
 	@Override

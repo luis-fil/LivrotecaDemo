@@ -1,5 +1,6 @@
 package com.runapp.negocio.basica.livros;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -32,7 +33,12 @@ public class Livro {
 	private List<Avaliacao> avaliacoes;
 	private double nota;
 	
+    public Livro() {
+        this.avaliacoes = new ArrayList<>();
+    }
+
 	public Livro(String titulo, String autor, double valorLivroFisico, double valorEbook, int numeroPaginas, String genero, String sinopse, String editora, int quantidade) {
+		this();
 		this.titulo = titulo;
 		this.autor = autor;
 		this.valorLivroFisico = valorLivroFisico;

@@ -16,6 +16,9 @@ public class Forum {
 	private long id;
 	private String titulo;
 	
+	public Forum() {		
+	}
+	
 	public long getId() {
 		return id;
 	}

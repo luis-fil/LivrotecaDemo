@@ -25,6 +25,9 @@ public class Mensagem {
 	@ManyToOne
 	private Topico topico;
 	
+	public Mensagem() {		
+	}
+	
 	public String getCorpo() {
 		return corpo;
 	}
