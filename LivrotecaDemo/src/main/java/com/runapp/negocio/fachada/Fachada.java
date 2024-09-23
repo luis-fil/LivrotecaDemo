@@ -59,7 +59,7 @@ public class Fachada {
 	public boolean existeUsuarioId(Long id) {
 		return cadastroUsuario.existeUsuarioId(id);
 	}
-	public Usuario salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
+	public Usuario salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException, TipoDiferenteUsuarioException {
 		return cadastroUsuario.salvarAlteracaoUsuario(usuario);
 	}
 	public Cliente procurarClienteId(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException {
@@ -129,7 +129,7 @@ public class Fachada {
     }
     
 	// Negocio Usuario-Pedido
-	public void cancelarPedidoCliente(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException {
+	public void cancelarPedidoCliente(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException, TipoDiferenteUsuarioException {
 		Cliente cliente = procurarClienteId(id);
 		
 		Pedido pedido = cliente.getPedidoPendente();
@@ -138,7 +138,7 @@ public class Fachada {
 		cliente.setPedidoPendente(new Pedido(cliente, "PENDENTE"));
 		salvarAlteracaoUsuario(cliente);
 	}
-	public double finalizarPedidoCliente(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException, LivroNaoExisteException, QuantidadeInsuficienteException, PedidoVazioException {
+	public double finalizarPedidoCliente(Long id) throws UsuarioNaoExisteException, ClienteNaoExisteException, UsuarioDuplicadoException, LivroNaoExisteException, QuantidadeInsuficienteException, PedidoVazioException, TipoDiferenteUsuarioException {
 		Cliente cliente = procurarClienteId(id);
 		
 		Pedido pedido = cliente.getPedidoPendente();

@@ -18,6 +18,7 @@ import com.runapp.negocio.basica.pedidos.Pedido;
 import com.runapp.negocio.basica.usuarios.Cliente;
 import com.runapp.negocio.cadastro.exception.LivroNaoExisteException;
 import com.runapp.negocio.cadastro.exception.QuantidadeInsuficienteException;
+import com.runapp.negocio.cadastro.exception.TipoDiferenteUsuarioException;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 import com.runapp.negocio.fachada.Fachada;
@@ -56,7 +57,7 @@ public class PedidoController {
 		try {
 			fachada.cancelarPedidoCliente(id);
 			return ResponseEntity.ok("Pedido cancelado!");
-		} catch (UsuarioNaoExisteException | ClienteNaoExisteException | UsuarioDuplicadoException e) {
+		} catch (UsuarioNaoExisteException | ClienteNaoExisteException | UsuarioDuplicadoException | TipoDiferenteUsuarioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
@@ -66,7 +67,7 @@ public class PedidoController {
 		try {
 			double valorTotal = fachada.finalizarPedidoCliente(id);
 			return ResponseEntity.ok(String.format("Compra finalizada com sucesso! Valor total: R$%.2f", valorTotal));
-		} catch (UsuarioNaoExisteException | ClienteNaoExisteException | UsuarioDuplicadoException | LivroNaoExisteException | QuantidadeInsuficienteException | PedidoVazioException e) {
+		} catch (UsuarioNaoExisteException | ClienteNaoExisteException | UsuarioDuplicadoException | LivroNaoExisteException | QuantidadeInsuficienteException | PedidoVazioException | TipoDiferenteUsuarioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}

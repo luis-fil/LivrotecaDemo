@@ -11,7 +11,7 @@ public class UsuarioNaoExisteException extends Exception {
 	}
 	
 	public UsuarioNaoExisteException(Long id) {
-		super("Não existe no sistema um usuário com o email informado");
+		super("Não existe no sistema um usuário com o id informado");
 		this.id = id;
 	}
 

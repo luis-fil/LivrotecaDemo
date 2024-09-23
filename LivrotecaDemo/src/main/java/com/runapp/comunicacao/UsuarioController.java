@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.runapp.negocio.basica.usuarios.Administrador;
 import com.runapp.negocio.basica.usuarios.Cliente;
+import com.runapp.negocio.cadastro.exception.TipoDiferenteUsuarioException;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 import com.runapp.negocio.fachada.Fachada;
@@ -63,7 +64,7 @@ public class UsuarioController {
 		c.setId(id);
 		try {
 			return ResponseEntity.ok((Cliente) fachada.salvarAlteracaoUsuario(c));
-		} catch (UsuarioNaoExisteException | UsuarioDuplicadoException e) {
+		} catch (UsuarioNaoExisteException | UsuarioDuplicadoException | TipoDiferenteUsuarioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
@@ -73,7 +74,7 @@ public class UsuarioController {
 		a.setId(id);
 		try {
 			return ResponseEntity.ok((Administrador) fachada.salvarAlteracaoUsuario(a));
-		} catch (UsuarioNaoExisteException | UsuarioDuplicadoException e) {
+		} catch (UsuarioNaoExisteException | UsuarioDuplicadoException | TipoDiferenteUsuarioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}

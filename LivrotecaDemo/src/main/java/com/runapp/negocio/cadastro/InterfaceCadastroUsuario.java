@@ -2,6 +2,7 @@ package com.runapp.negocio.cadastro;
 
 import java.util.List;
 import com.runapp.negocio.basica.usuarios.Usuario;
+import com.runapp.negocio.cadastro.exception.TipoDiferenteUsuarioException;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 
@@ -11,7 +12,7 @@ public interface InterfaceCadastroUsuario {
 
 	Usuario cadastrarUsuario(Usuario usuario) throws UsuarioDuplicadoException;
 	
-	Usuario salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException;
+	Usuario salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException, TipoDiferenteUsuarioException;
 
 	List<Usuario> listarUsuarios();
 

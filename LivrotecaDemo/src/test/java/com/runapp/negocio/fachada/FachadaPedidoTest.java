@@ -14,6 +14,7 @@ import com.runapp.negocio.basica.usuarios.Endereco;
 import com.runapp.negocio.cadastro.exception.LivroJaExisteException;
 import com.runapp.negocio.cadastro.exception.LivroNaoExisteException;
 import com.runapp.negocio.cadastro.exception.QuantidadeInsuficienteException;
+import com.runapp.negocio.cadastro.exception.TipoDiferenteUsuarioException;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 import com.runapp.negocio.fachada.exception.ClienteNaoExisteException;
@@ -53,7 +54,7 @@ class FachadaPedidoTest {
 	}
 	
 	@Test
-	void testeFinalizarPedidoCliente() throws UsuarioNaoExisteException, ClienteNaoExisteException, LivroNaoExisteException, QuantidadeInvalidaException, QuantidadeInsuficienteException, UsuarioDuplicadoException, PedidoVazioException {
+	void testeFinalizarPedidoCliente() throws UsuarioNaoExisteException, ClienteNaoExisteException, LivroNaoExisteException, QuantidadeInvalidaException, QuantidadeInsuficienteException, UsuarioDuplicadoException, PedidoVazioException, TipoDiferenteUsuarioException {
 		Cliente c = fachada.procurarClienteId((long) 1);
 		Livro l = fachada.procurarLivroId((long) 1);
 		fachada.adicionarLivroPedidoCliente(l.getId(), 1, false, c.getId());

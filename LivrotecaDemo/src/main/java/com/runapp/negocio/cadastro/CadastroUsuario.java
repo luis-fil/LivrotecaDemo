@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.runapp.dados.InterfaceRepositorioUsuario;
+import com.runapp.negocio.basica.usuarios.Administrador;
+import com.runapp.negocio.basica.usuarios.Cliente;
 import com.runapp.negocio.basica.usuarios.Usuario;
+import com.runapp.negocio.cadastro.exception.TipoDiferenteUsuarioException;
 import com.runapp.negocio.cadastro.exception.UsuarioDuplicadoException;
 import com.runapp.negocio.cadastro.exception.UsuarioNaoExisteException;
 
@@ -50,8 +53,14 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 	}
 
 	@Override
-	public Usuario salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException {
+	public Usuario salvarAlteracaoUsuario(Usuario usuario) throws UsuarioNaoExisteException, UsuarioDuplicadoException, TipoDiferenteUsuarioException {
 		Usuario u = procurarUsuarioId(usuario.getId());
+		if (u instanceof Cliente && !(usuario instanceof Cliente)) {
+			throw new TipoDiferenteUsuarioException(String.format("O usuario informado para alterar o cliente com id %d não é um cliente", usuario.getId()));
+		}
+		if (u instanceof Administrador && !(usuario instanceof Administrador)) {
+			throw new TipoDiferenteUsuarioException(String.format("O usuario informado para alterar o administrador com id %d não é um administrador", usuario.getId()));
+		}
 		if (u.getEmail().equals(usuario.getEmail())) {
 			return repositorioUsuario.save(usuario);			
 		} else {
